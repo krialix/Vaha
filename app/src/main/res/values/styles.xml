@@ -1,0 +1,29 @@
+<resources>
+
+    <style name="Vaha.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="android:colorButtonNormal">@color/accent_lighter</item>
+
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <style name="Vaha" parent="Vaha.Base" /> <!-- pre-Lollipop -->
+
+    <style name="Vaha.Splash">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
+    <style name="Vaha.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
+
+    <style name="Vaha.AppBarOverlay.Light" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorControlNormal">@color/primary</item>
+    </style>
+
+    <style name="Vaha.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Vaha.PopupOverlay.Light" parent="ThemeOverlay.AppCompat" />
+
+</resources>

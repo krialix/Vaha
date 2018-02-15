@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Common -->
+    <string name="common_error_no_connection">Internet yok</string>
+    <string name="common_error_unknown">Bir şeyler yanlış gitti :(</string>
+    <string name="common_validate_email">Lütfen e-postanızı onaylayın. E-posta kutunuzu kontrol edin.</string>
+    <string name="common_app_exit">Uygulamadan çıkmak istediğinize emin misiniz?</string>
+    <string name="common_resend_activation_mail">Aktivasyon e-postasını tekrar gönder</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_bottom_category">Kategoriler</string>
+    <string name="nav_bottom_questions">Sorular</string>
+    <string name="nav_bottom_sessions">Oturumlar</string>
+    <string name="nav_bottom_profile">Profilim</string>
+
+    <!-- Sign in -->
+    <string name="sign_in_hint_email">E-posta</string>
+    <string name="sign_up_hint_username">Kullanıcı Adı</string>
+    <string name="sing_in_hint_password">Şifre</string>
+    <string name="sign_in_label_forgot_password"><u>Şifremi unuttum?</u></string>
+    <string name="sing_in_label_don_t_have_an_account">Yeni hesap yarat</string>
+    <string name="sign_in_label_register"><u>Kayıt Ol</u></string>
+    <string name="sign_in_label_login_now">Giriş Yap</string>
+    <string name="sign_up_label_info">Yeni hesap yarat</string>
+    <string name="sign_in_label_loading">Yükleniyor…</string>
+    <string name="sign_in_error_invalid_email">Geçersiz e-posta</string>
+    <string name="sign_in_error_invalid_username">Geçersiz kullanıcı adı</string>
+    <string name="sign_in_error_email_already_taken">E-posta kullanımda</string>
+    <string name="sign_in_error_username_already_taken">Kullanıcı adı kullanımda</string>
+    <string name="sign_in_error_invalid_password">Şifreniz en az 4 karakterden oluşmalıdır</string>
+    <string name="sign_in_error_field_required">Gerekli alan</string>
+    <string name="sign_in_error_user_not_available">Kullanıcı bulunamıyor</string>
+    <string name="sign_up_user_exists">Kayıtlı kullanıcı</string>
+
+    <!-- Forgot Password -->
+    <string name="forgot_password_instructions">Şifrenizi sıfırlama talimatları e-postanıza gönderildi!</string>
+    <string name="forgot_password_failed_email_sent">E-posta gönderimi başarısız oldu!</string>
+    <string name="forgot_password_reset_password">Şifreni sıfırla</string>
+
+    <!-- Category List -->
+    <string name="category_list_header_info">Soru sormak için kategorilere tıklayın!</string>
+
+    <!-- Question -->
+    <string name="question_asked_by">%1$s sordu</string>
+    <string name="question_answered_by">%1$s cevapladı</string>
+    <string name="question_start_session">Oturum başlatma isteği gönder</string>
+    <string name="question_no_available_questions">Soru bulunamadı</string>
+    <string name="question_request_sent">Talebiniz gönderildi</string>
+    <string name="question_see_answer_requests">Cevap isteklerini gör</string>
+
+    <!-- Session List -->
+    <string name="session_list_asked_by">%1$s sordu - </string>
+    <string name="session_list_no_available_sessions">Oturum bulunamadı</string>
+
+    <!-- Ask Question -->
+    <string name="ask_question_sending">Soru gönderiliyor…</string>
+    <string name="ask_question_error_empty_question">Soru içeriği boş bırakılamaz!</string>
+    <string name="ask_question_daily_limit_over">Günlük soru limitiniz bitmiştir!</string>
+    <string name="ask_question_community_anything">Sorunuzu yazın…</string>
+    <string name="ask_question_ask">Sor</string>
+
+    <!-- Session -->
+    <string name="session_finish_and_rate">Bitir &amp; oyla</string>
+    <string name="session_chat_box_hint">Cevap yaz</string>
+    <string name="session_finish">Bitir</string>
+    <string name="session_dialog_title">Oturumu bitir &amp; kullanıcıyı oyla</string>
+    <string name="session_dialog_dispute">Yeniden sor</string>
+    <string name="session_dialog_exists">Açık oturumunuz bulunuyor</string>
+    <string name="session_dialog_continue">Devam</string>
+    <string name="session_disable_input">Oturum tamamlandı. Mesaj gönderemezsiniz!</string>
+    <string name="session_dialog_error_dispute">Soru tekrarı limitiniz dolmuştur</string>
+
+    <!-- Profile -->
+    <string name="profile_rating">Puanlama: %1$s</string>
+    <string name="profile_log_out">Çıkış Yap</string>
+    <string name="profile_category_preferences">Kategori Tercihleri</string>
+    <string name="profile_organize_calendar">Takvimi Ayarla</string>
+    <string name="profile_daily_question_count">Günlük Soru</string>
+    <string name="profile_question_count">Sorular</string>
+    <string name="profile_session_count">Oturumlar</string>
+
+    <!-- Category Preferences -->
+    <string name="category_preferences_info">Bildirim almak istemediğiniz kategorileri kapalı durumuna getirebilirsiniz</string>
+
+    <string name="notification_accept">Kabul Et</string>
+    <string name="notification_answer">Cevapla</string>
+    <string name="notification_asked_question">%1$s bir soru sordu</string>
+    <string name="notification_reasked_question">%1$s sorusunu yeniden sordu</string>
+    <string name="notification_answer_question">%1$s sorunu cevaplamak istiyor!</string>
+    <string name="notification_enter_session">İsteğin kabul edildi. Oturuma girmek için buraya tıkla.</string>
+    <string name="notification_end_session">%1$s oturumu sonlandırdı. Oturumdan çıkabilirsiniz</string>
+    <string name="notification_reask">Sorunuz tekrar cevaplanabilir hale getirildi</string>
+    <string name="notification_new_message">%1$s yeni mesaj gönderdi</string>
+    <string name="notification_error_start_session">Talep gönderilirken bir hata oluştu!</string>
+    <string name="notification_error_active_session">Bu görüşme başlamış durumda. İlgin için teşekkür ederiz :)</string>
+
+    <!-- Request View -->
+    <string name="request_view_content">%1$s &#183; %2$s/5</string>
+
+</resources>

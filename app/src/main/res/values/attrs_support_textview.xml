@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SupportTextView">
+        <attr name="android:drawableLeft" format="reference" />
+        <attr name="android:drawableStart" format="reference" />
+        <attr name="android:drawableTop" format="reference" />
+        <attr name="android:drawableRight" format="reference" />
+        <attr name="android:drawableEnd" format="reference" />
+        <attr name="android:drawableBottom" format="reference" />
+
+        <attr name="drawableTintCompat" format="color" />
+
+        <attr name="compoundDrawableWidth" format="dimension" />
+        <attr name="compoundDrawableHeight" format="dimension" />
+    </declare-styleable>
+</resources>

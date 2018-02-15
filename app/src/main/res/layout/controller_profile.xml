@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fillViewport="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_profile_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
+            app:layout_constraintTop_toTopOf="@+id/guideline_horizontal"
+            tools:text="Gracie Parra" />
+
+        <View
+            android:id="@+id/view_profile_divider"
+            android:layout_width="@dimen/_56asdp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_8asdp"
+            android:background="@android:drawable/divider_horizontal_bright"
+            app:layout_constraintEnd_toEndOf="@+id/tv_profile_username"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline_vertical_start"
+            app:layout_constraintStart_toStartOf="@+id/tv_profile_username"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_username" />
+
+        <TextView
+            android:id="@+id/tv_profile_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8asdp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_vertical_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
+            app:layout_constraintTop_toBottomOf="@+id/view_profile_divider"
+            tools:text="Rate: 7.8/10" />
+
+        <include layout="@layout/include_profile_counters" />
+
+        <Button
+            android:id="@+id/btn_profile_set_category_notifications"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16asdp"
+            android:text="@string/profile_category_preferences"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_vertical_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
+            app:layout_constraintTop_toBottomOf="@+id/view_profile_available_questions" />
+
+        <Button
+            android:id="@+id/btn_profile_set_available_times"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8asdp"
+            android:enabled="false"
+            android:text="@string/profile_organize_calendar"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_vertical_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
+            app:layout_constraintTop_toBottomOf="@+id/btn_profile_set_category_notifications" />
+
+        <Button
+            android:id="@+id/btn_profile_log_out"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8asdp"
+            android:text="@string/profile_log_out"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_vertical_end"
+            app:layout_constraintStart_toStartOf="@+id/guideline_vertical_start"
+            app:layout_constraintTop_toBottomOf="@+id/btn_profile_set_available_times" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_vertical_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/_16asdp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/_32asdp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_vertical_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/_16asdp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

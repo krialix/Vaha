@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#FAFAFA</color>
+    <color name="primaryDark">#C7C7C7</color>
+    <color name="accent">#8C1829</color>
+
+    <!-- common colors -->
+    <color name="accent_lighter">#c14b51</color>
+    <color name="accent_darker">#580000</color>
+    <color name="text_color">#3A3D47</color>
+
+    <color name="disabled_accent">#808C1829</color>
+
+    <color name="background_light">#fafafa</color> <!-- grey 50 -->
+    <color name="background_lightish">#e0e0e0</color> <!-- grey 300 -->
+    <color name="background_grey_100">#F5F5F5</color>
+
+    <color name="gray_light">#e8e8e8</color>
+</resources>

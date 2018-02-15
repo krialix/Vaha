@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">Vaha</string>
+
+    <!-- Common -->
+    <string name="common_error_no_connection">Internet is not available</string>
+    <string name="common_error_unknown">Something went wrong :(</string>
+    <string name="common_validate_email">Please verify your email. Check your inbox with spam folder.</string>
+    <string name="common_app_exit">Are you sure you want to exit?</string>
+    <string name="common_resend_activation_mail">Resend activation mail</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_bottom_category">Categories</string>
+    <string name="nav_bottom_questions">Questions</string>
+    <string name="nav_bottom_sessions">Sessions</string>
+    <string name="nav_bottom_profile">My Profile</string>
+
+    <!-- Sign in -->
+    <string name="sign_in_hint_email">Email</string>
+    <string name="sign_up_hint_username">Username</string>
+    <string name="sing_in_hint_password">Password</string>
+    <string name="sign_in_label_forgot_password"><u>Forgot Password?</u></string>
+    <string name="sing_in_label_don_t_have_an_account">Don\'t have an account?</string>
+    <string name="sign_in_label_register"><u>Register</u></string>
+    <string name="sign_in_label_login_now">Login now</string>
+    <string name="sign_up_label_info">Now, Let\'s create your profile</string>
+    <string name="sign_in_label_loading">Loading…</string>
+    <string name="sign_in_error_invalid_email">Invalid email</string>
+    <string name="sign_in_error_invalid_username">Invalid username</string>
+    <string name="sign_in_error_email_already_taken">Email is in use</string>
+    <string name="sign_in_error_username_already_taken">Username is in use</string>
+    <string name="sign_in_error_invalid_password">Your password must include at least 4 characters</string>
+    <string name="sign_in_error_field_required">Required field</string>
+    <string name="sign_in_error_user_not_available">User doesn\'t exist</string>
+    <string name="sign_up_user_exists">User exists</string>
+
+    <!-- Forgot Password -->
+    <string name="forgot_password_instructions">We have sent you instructions to reset your password!</string>
+    <string name="forgot_password_failed_email_sent">Failed to send reset email!</string>
+    <string name="forgot_password_reset_password">Reset Password</string>
+
+    <!-- Category List -->
+    <string name="category_list_header_info">Click a category to ask question</string>
+
+    <!-- Question -->
+    <string name="question_asked_by">Asked by %1$s</string>
+    <string name="question_answered_by">Answered by %1$s</string>
+    <string name="question_start_session">Send session request</string>
+    <string name="question_no_available_questions">No available questions</string>
+    <string name="question_request_sent">Your request has been sent</string>
+    <string name="question_see_answer_requests">See answer requests</string>
+
+    <!-- Session List -->
+    <string name="session_list_asked_by">Asked by %1$s - </string>
+    <string name="session_list_no_available_sessions">No available sessions</string>
+
+    <!-- Ask Question -->
+    <string name="ask_question_sending">Question is sending…</string>
+    <string name="ask_question_error_empty_question">Question content cannot be empty!</string>
+    <string name="ask_question_daily_limit_over">Daily question limit is over!</string>
+    <string name="ask_question_community_anything">Ask community anything…</string>
+    <string name="ask_question_ask">Ask</string>
+
+    <!-- Session -->
+    <string name="session_finish_and_rate">Finish &amp; rate</string>
+    <string name="session_chat_box_hint">Enter a message</string>
+    <string name="session_finish">Finish</string>
+    <string name="session_dialog_title">End session &amp; rate user</string>
+    <string name="session_dialog_dispute">Ask again</string>
+    <string name="session_dialog_exists">You have an active session</string>
+    <string name="session_dialog_continue">Continue</string>
+    <string name="session_disable_input">This session is completed. You can\'t write!</string>
+    <string name="session_dialog_error_dispute">The quota for re-asking is full</string>
+
+    <!-- Profile -->
+    <string name="profile_rating">Rating: %1$s</string>
+    <string name="profile_log_out">Log out</string>
+    <string name="profile_category_preferences">Category Preferences</string>
+    <string name="profile_organize_calendar">Organize Calendar</string>
+    <string name="profile_daily_question_count">Daily question</string>
+    <string name="profile_question_count">Questions</string>
+    <string name="profile_session_count">Sessions</string>
+
+    <!-- Category Preferences -->
+    <string name="category_preferences_info">Switch off the topics which you don\'t want to receive notifications</string>
+
+    <string name="notification_accept">Accept</string>
+    <string name="notification_answer">Answer</string>
+    <string name="notification_asked_question">%1$s asked a question</string>
+    <string name="notification_reasked_question">%1$s reasked a question</string>
+    <string name="notification_answer_question">%1$s wants to answer your question!</string>
+    <string name="notification_enter_session">Your request has been accepted. Click here to enter session.</string>
+    <string name="notification_end_session">%1$s has ended session. You can close the session.</string>
+    <string name="notification_reask">Your question is scheduled to be reasked</string>
+    <string name="notification_new_message">New message from %1$s</string>
+    <string name="notification_error_start_session">An error occurred while sending request!</string>
+    <string name="notification_error_active_session">This session is already started with another person. Thank you for your interest :)</string>
+
+    <!-- Request View -->
+    <string name="request_view_content">%1$s &#183; %2$s/5</string>
+
+</resources>

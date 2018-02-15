@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/controller_profile">
+
+    <LinearLayout
+        android:id="@+id/view_profile_available_questions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/view_profile_question_count"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_profile_rating">
+
+        <TextView
+            android:id="@+id/tv_profile_available_questions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            tools:text="2" />
+
+        <TextView
+            android:id="@+id/tv_profile_available_questions_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/profile_daily_question_count" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_profile_question_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/view_profile_comment_count"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view_profile_available_questions"
+        app:layout_constraintTop_toTopOf="@+id/view_profile_available_questions">
+
+        <TextView
+            android:id="@+id/tv_profile_question_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            tools:text="2" />
+
+        <TextView
+            android:id="@+id/tv_profile_question_count_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/profile_question_count" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_profile_comment_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_end"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/view_profile_question_count"
+        app:layout_constraintTop_toTopOf="@+id/view_profile_available_questions">
+
+        <TextView
+            android:id="@+id/tv_profile_answer_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            tools:text="2" />
+
+        <TextView
+            android:id="@+id/tv_profile_comment_count_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/profile_session_count" />
+
+    </LinearLayout>
+</merge>

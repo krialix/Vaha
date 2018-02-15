@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_vertical_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_vertical_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_horizontal_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <TextView
+        android:id="@+id/tv_question_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        app:layout_constraintLeft_toLeftOf="@+id/gl_vertical_start"
+        app:layout_constraintTop_toTopOf="@+id/gl_horizontal_top"
+        tools:text="Test Category" />
+
+    <View
+        android:id="@+id/view_question_divider"
+        android:layout_width="64dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/accent"
+        app:layout_constraintLeft_toLeftOf="@+id/gl_vertical_start"
+        app:layout_constraintTop_toBottomOf="@+id/tv_question_category" />
+
+    <TextView
+        android:id="@+id/tv_question_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.1"
+        android:maxLines="4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/gl_vertical_end"
+        app:layout_constraintStart_toStartOf="@+id/gl_vertical_start"
+        app:layout_constraintTop_toBottomOf="@+id/view_question_divider"
+        tools:text="@tools:sample/lorem/random" />
+
+    <TextView
+        android:id="@+id/tv_question_asked_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        app:layout_constraintLeft_toLeftOf="@+id/gl_vertical_start"
+        app:layout_constraintTop_toBottomOf="@+id/tv_question_content"
+        tools:text="@string/question_asked_by" />
+
+    <TextView
+        android:id="@+id/tv_question_answered_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        app:layout_constraintLeft_toLeftOf="@+id/gl_vertical_start"
+        app:layout_constraintTop_toBottomOf="@+id/tv_question_asked_by"
+        tools:text="@string/question_answered_by" />
+
+    <Button
+        android:id="@+id/tv_question_send_session_request"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/question_start_session"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toStartOf="@+id/gl_vertical_end"
+        app:layout_constraintStart_toStartOf="@+id/gl_vertical_start"
+        app:layout_constraintTop_toBottomOf="@+id/tv_question_answered_by" />
+
+    <LinearLayout
+        android:id="@+id/tv_question_pending_requests"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_question_send_session_request">
+
+        <com.github.florent37.expansionpanel.ExpansionHeader
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/background_lightish"
+            app:expansion_layout="@id/layout_question_expansion_content"
+            app:expansion_toggleOnClick="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/question_see_answer_requests"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+        </com.github.florent37.expansionpanel.ExpansionHeader>
+
+        <com.github.florent37.expansionpanel.ExpansionLayout
+            android:id="@+id/layout_question_expansion_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_grey_100">
+
+            <LinearLayout
+                android:id="@+id/layout_question_expansion_content_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+        </com.github.florent37.expansionpanel.ExpansionLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

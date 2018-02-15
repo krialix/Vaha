@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_sign_in_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_56asdp"
+                android:tint="@color/accent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_vaha_logo_full" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_sign_in_email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_24asdp"
+                android:layout_marginLeft="@dimen/_24asdp"
+                android:layout_marginRight="@dimen/_24asdp"
+                android:layout_marginStart="@dimen/_24asdp"
+                android:layout_marginTop="@dimen/_48asdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_sign_in_logo">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sign_in_hint_email"
+                    android:inputType="textEmailAddress" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_sign_in_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_24asdp"
+                android:layout_marginLeft="@dimen/_24asdp"
+                android:layout_marginRight="@dimen/_24asdp"
+                android:layout_marginStart="@dimen/_24asdp"
+                android:layout_marginTop="@dimen/_24asdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_sign_in_email"
+                app:passwordToggleEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sing_in_hint_password"
+                    android:inputType="textPassword" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tv_sign_in_forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16asdp"
+                android:text="@string/sign_in_label_forgot_password"
+                android:textColor="@color/accent"
+                app:layout_constraintRight_toRightOf="@+id/til_sign_in_password"
+                app:layout_constraintTop_toBottomOf="@+id/til_sign_in_password" />
+
+            <TextView
+                android:id="@+id/tv_sign_in_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_48asdp"
+                android:text="@string/sing_in_label_don_t_have_an_account"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toLeftOf="@+id/til_sign_in_password"
+                app:layout_constraintRight_toLeftOf="@+id/tv_sign_in_register"
+                app:layout_constraintTop_toBottomOf="@+id/tv_sign_in_forgot_password" />
+
+            <TextView
+                android:id="@+id/tv_sign_in_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4asdp"
+                android:layout_marginTop="@dimen/_48asdp"
+                android:text="@string/sign_in_label_register"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@+id/tv_sign_in_info"
+                app:layout_constraintRight_toRightOf="@+id/til_sign_in_password"
+                app:layout_constraintTop_toBottomOf="@+id/tv_sign_in_forgot_password" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tv_sign_in_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/background_sign_in_up"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/sign_in_label_login_now"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:textColor="@android:color/white" />
+
+</android.support.design.widget.CoordinatorLayout>
