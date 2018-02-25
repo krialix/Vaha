@@ -12,12 +12,14 @@ class InsertCategoryUseCase(
     private val displayNameTr: String
 ) : UseCase<CategoryClient> {
 
-  override fun run(): CategoryClient {
-    val category = Category(displayName = displayName,
-        image = CategoryUtil.getImage(displayName, ImagesServiceFactory.getImagesService()),
-        displayNameTr = displayNameTr)
-    ofy().save().entity(category)
+    override fun run(): CategoryClient {
+        val category = Category(
+            displayName = displayName,
+            image = CategoryUtil.getImage(displayName, ImagesServiceFactory.getImagesService()),
+            displayNameTr = displayNameTr
+        )
+        ofy().save().entity(category)
 
-    return CategoryClient.from(category)
-  }
+        return CategoryClient.from(category)
+    }
 }

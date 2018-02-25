@@ -91,13 +91,16 @@ public class QuestionView extends ConstraintLayout {
   }
 
   @ModelProp
-  public void setPendingRequests(@Nullable List<PendingRequest> requests) {
-    vgPendingRequests.setVisibility(requests == null ? GONE : VISIBLE);
+  public void showPendingRequestsLayout(boolean show) {
+    vgPendingRequests.setVisibility(!show ? GONE : VISIBLE);
+  }
 
+  @ModelProp
+  public void setPendingRequests(@Nullable List<PendingRequest> requests) {
     if (requests != null && vgExpansionContentWrapper.getChildCount() == 0) {
       for (PendingRequest request : requests) {
         RequestView view = new RequestView(getContext().getApplicationContext());
-        view.setContent(request.displayName, request.rating);
+        view.setContent(request.getDisplayName(), request.getRating());
         vgExpansionContentWrapper.addView(view);
       }
     }

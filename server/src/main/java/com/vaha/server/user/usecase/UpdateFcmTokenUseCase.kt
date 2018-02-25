@@ -11,12 +11,12 @@ class UpdateFcmTokenUseCase(
     private val userId: String
 ) : UseCase<Unit> {
 
-  @Throws(ServiceException::class)
-  override fun run() {
-    var user = ofy().load().key(Key.create<Account>(userId)).now()
+    @Throws(ServiceException::class)
+    override fun run() {
+        var user = ofy().load().key(Key.create<Account>(userId)).now()
 
-    user = user.copy(fcmToken = fcmToken)
+        user = user.copy(fcmToken = fcmToken)
 
-    ofy().save().entity(user).now()
-  }
+        ofy().save().entity(user).now()
+    }
 }

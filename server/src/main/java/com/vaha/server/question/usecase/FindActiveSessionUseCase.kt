@@ -6,21 +6,21 @@ import com.vaha.server.ofy.OfyService.ofy
 import com.vaha.server.question.client.QuestionClient
 import com.vaha.server.user.entity.Account
 
-class FindActiveSessionUseCase(private val userId: String): UseCase<QuestionClient?> {
+class FindActiveSessionUseCase(private val userId: String) : UseCase<QuestionClient?> {
 
-  override fun run(): QuestionClient? {
-    val userKey = Key.create<Account>(userId)
+    override fun run(): QuestionClient? {
+        val userKey = Key.create<Account>(userId)
 
-    val activeQuestionKeys = ofy().load().key(userKey).now().activeQuestionKeys
+        val activeQuestionKeys = ofy().load().key(userKey).now().activeQuestionKeys
 
-    if (activeQuestionKeys.isEmpty()) return null
+        if (activeQuestionKeys.isEmpty()) return null
 
-    val questionKey = activeQuestionKeys.find { it.getParent<Account>().equivalent(userKey) }
+        val questionKey = activeQuestionKeys.find { it.getParent<Account>().equivalent(userKey) }
 
-    return questionKey?.let {
-      var question = ofy().load().key(it).now()
-      question = question.copy(owner = question.parent.equivalent(userKey))
-      QuestionClient(question)
+        return questionKey?.let {
+            var question = ofy().load().key(it).now()
+            question = question.copy(owner = question.parent.equivalent(userKey))
+            QuestionClient(question)
+        }
     }
-  }
 }

@@ -4,6 +4,8 @@ import com.androidhuman.rxfirebase2.database.ChildAddEvent
 import com.androidhuman.rxfirebase2.database.RxFirebaseDatabase
 import com.google.firebase.database.FirebaseDatabase
 import com.vaha.android.data.api.SessionService
+import com.vaha.android.data.api.VahaService
+import com.vaha.android.data.entity.Question
 import com.vaha.android.data.entity.chat.LastUserMessage
 import com.vaha.android.data.entity.chat.Message
 import com.vaha.server.vahaApi.model.CollectionResponseSessionClient
@@ -15,9 +17,20 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SessionRepository @Inject constructor(private val sessionService: SessionService) {
+class SessionRepository @Inject constructor(
+    private val vahaService: VahaService,
+    private val sessionService: SessionService
+) {
 
     private val database = FirebaseDatabase.getInstance()
+
+    fun insertQuestion(content: String, categoryId: String): Completable {
+        return vahaService.insertQuestion(content, categoryId)
+    }
+
+    fun listQuestions(cursor: String?): Single<List<Question>> {
+        return vahaService.listQuestions()
+    }
 
     fun startSession(questionId: String, answererId: String): Completable =
         sessionService.startSession(questionId, answererId)

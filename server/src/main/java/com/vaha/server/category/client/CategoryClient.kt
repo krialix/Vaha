@@ -9,8 +9,12 @@ data class CategoryClient(
     val image: String
 ) {
 
-  companion object {
-    fun from(category: Category): CategoryClient
-        = CategoryClient(category.websafeId, category.displayName, category.displayNameTr, category.image)
-  }
+    companion object {
+        fun from(category: Category): CategoryClient = CategoryClient(
+            category.websafeId,
+            category.displayName,
+            category.displayNameTr,
+            category.image
+        )
+    }
 }

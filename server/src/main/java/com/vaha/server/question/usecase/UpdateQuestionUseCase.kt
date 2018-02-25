@@ -16,20 +16,20 @@ class UpdateQuestionUseCase(
     private val categoryId: String
 ) : UseCase<QuestionClient> {
 
-  override fun run(): QuestionClient {
-    val questionKey = Key.create<Question>(questionId)
-    val ownerKey = Key.create<Account>(ownerId)
-    val categoryKey = Key.create<Category>(categoryId)
+    override fun run(): QuestionClient {
+        val questionKey = Key.create<Question>(questionId)
+        val ownerKey = Key.create<Account>(ownerId)
+        val categoryKey = Key.create<Category>(categoryId)
 
-    val fetched = ofy().load().keys(questionKey, ownerKey) as Map<*, *>
-    var question = fetched[questionKey] as Question
-    val user = fetched[ownerKey] as Account
+        val fetched = ofy().load().keys(questionKey, ownerKey) as Map<*, *>
+        var question = fetched[questionKey] as Question
+        val user = fetched[ownerKey] as Account
 
-    content.let { question = question.copy(content = content) }
-    categoryId.let { question = question.copy(category = Ref.create(categoryKey)) }
+        content.let { question = question.copy(content = content) }
+        categoryId.let { question = question.copy(category = Ref.create(categoryKey)) }
 
-    ofy().save().entities(question, user)
+        ofy().save().entities(question, user)
 
-    return QuestionClient(question)
-  }
+        return QuestionClient(question)
+    }
 }

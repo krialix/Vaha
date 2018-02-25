@@ -58,8 +58,8 @@ public class CategoryListController extends BaseController {
     viewModel = viewModelFactory.create(CategoryListViewModel.class);
 
     /*viewModel =
-        ViewModelProvider.AndroidViewModelFactory.getInstance().of((FragmentActivity) getActivity(), viewModelFactory)
-            .get(CategoryListViewModel.class);*/
+    ViewModelProvider.AndroidViewModelFactory.getInstance().of((FragmentActivity) getActivity(), viewModelFactory)
+        .get(CategoryListViewModel.class);*/
   }
 
   @Override

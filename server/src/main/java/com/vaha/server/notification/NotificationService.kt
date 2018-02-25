@@ -17,108 +17,130 @@ import java.util.logging.Logger
 
 class NotificationService(private val service: URLFetchService) {
 
-  fun subscribeTopic(fcmToken: String, topicName: String) {
-    val url = URL("https://iid.googleapis.com/iid/v1/$fcmToken/rel/topics/$topicName")
-    val request = HTTPRequest(url, HTTPMethod.POST)
+    fun subscribeTopic(fcmToken: String, topicName: String) {
+        val url = URL("https://iid.googleapis.com/iid/v1/$fcmToken/rel/topics/$topicName")
+        val request = HTTPRequest(url, HTTPMethod.POST)
 
-    request.addHeader(HTTPHeader(OAuth2.HeaderType.AUTHORIZATION,
-        "key=${System.getProperty("fcm.api.key")}"))
-    request.addHeader(HTTPHeader(OAuth2.HeaderType.CONTENT_TYPE, OAuth2.ContentType.JSON))
+        request.addHeader(
+            HTTPHeader(
+                OAuth2.HeaderType.AUTHORIZATION,
+                "key=${System.getProperty("fcm.api.key")}"
+            )
+        )
+        request.addHeader(HTTPHeader(OAuth2.HeaderType.CONTENT_TYPE, OAuth2.ContentType.JSON))
 
-    if (!ServerEnv.isTest()) {
-      try {
-        service.fetchAsync(request)
-      } catch (e: IOException) {
-        log.info(e.message)
-      }
-    }
-  }
-
-  fun subscribeTopic(fcmTokens: List<String>, topicName: String) {
-    val url = URL("https://iid.googleapis.com/iid/v1:batchAdd")
-    val request = HTTPRequest(url, HTTPMethod.POST)
-
-    request.addHeader(HTTPHeader(OAuth2.HeaderType.AUTHORIZATION,
-        "key=${System.getProperty("fcm.api.key")}"))
-    request.addHeader(HTTPHeader(OAuth2.HeaderType.CONTENT_TYPE, OAuth2.ContentType.JSON))
-
-    val subscribeTopicRequest = SubscribeTopicRequest(to = "/topics/$topicName", registrationTokens = fcmTokens)
-
-    request.payload = subscribeTopicRequest.toBytes()
-
-    if (!ServerEnv.isTest()) {
-      try {
-        service.fetchAsync(request)
-      } catch (e: IOException) {
-        log.info(e.message)
-      }
-    }
-  }
-
-  fun unsubscribeTopic(fcmToken: String, topicName: String) {
-    val url = URL("https://iid.googleapis.com/iid/v1/$fcmToken/rel/topics/$topicName")
-    val request = HTTPRequest(url, HTTPMethod.DELETE)
-
-    request.addHeader(HTTPHeader(OAuth2.HeaderType.AUTHORIZATION,
-        "key=${System.getProperty("fcm.api.key")}"))
-    request.addHeader(HTTPHeader(OAuth2.HeaderType.CONTENT_TYPE, OAuth2.ContentType.JSON))
-
-    if (!ServerEnv.isTest()) {
-      try {
-        service.fetchAsync(request)
-      } catch (e: IOException) {
-        log.info(e.message)
-      }
-    }
-  }
-
-  fun listSubscribedTopics(fcmToken: String): FcmResponse? {
-    val url = URL("https://iid.googleapis.com/iid/v1/$fcmToken?details=true")
-    val request = HTTPRequest(url, HTTPMethod.GET)
-
-    request.addHeader(HTTPHeader(OAuth2.HeaderType.AUTHORIZATION,
-        "key=${System.getProperty("fcm.api.key")}"))
-    request.addHeader(HTTPHeader(OAuth2.HeaderType.CONTENT_TYPE, OAuth2.ContentType.JSON))
-
-    if (!ServerEnv.isTest()) {
-      try {
-        val httpResponse = service.fetch(request)
-        return ObjectMapper().registerModule(KotlinModule()).readValue(httpResponse.content, FcmResponse::class.java)
-      } catch (e: IOException) {
-        log.info(e.message)
-      }
+        if (!ServerEnv.isTest()) {
+            try {
+                service.fetchAsync(request)
+            } catch (e: IOException) {
+                log.info(e.message)
+            }
+        }
     }
 
-    return null
-  }
+    fun subscribeTopic(fcmTokens: List<String>, topicName: String) {
+        val url = URL("https://iid.googleapis.com/iid/v1:batchAdd")
+        val request = HTTPRequest(url, HTTPMethod.POST)
 
-  fun send(message: PushMessage) {
-    if (!ServerEnv.isTest()) {
-      try {
-        service.fetchAsync(buildRequest(message.toBytes()))
-      } catch (e: IOException) {
-        log.info(e.message)
-      }
+        request.addHeader(
+            HTTPHeader(
+                OAuth2.HeaderType.AUTHORIZATION,
+                "key=${System.getProperty("fcm.api.key")}"
+            )
+        )
+        request.addHeader(HTTPHeader(OAuth2.HeaderType.CONTENT_TYPE, OAuth2.ContentType.JSON))
+
+        val subscribeTopicRequest =
+            SubscribeTopicRequest(to = "/topics/$topicName", registrationTokens = fcmTokens)
+
+        request.payload = subscribeTopicRequest.toBytes()
+
+        if (!ServerEnv.isTest()) {
+            try {
+                service.fetchAsync(request)
+            } catch (e: IOException) {
+                log.info(e.message)
+            }
+        }
     }
-  }
 
-  @Throws(MalformedURLException::class)
-  private fun buildRequest(bytes: ByteArray): HTTPRequest {
-    val url = URL(FCM_SEND_ENDPOINT)
-    val request = HTTPRequest(url, HTTPMethod.POST)
+    fun unsubscribeTopic(fcmToken: String, topicName: String) {
+        val url = URL("https://iid.googleapis.com/iid/v1/$fcmToken/rel/topics/$topicName")
+        val request = HTTPRequest(url, HTTPMethod.DELETE)
 
-    request.addHeader(HTTPHeader(OAuth2.HeaderType.AUTHORIZATION,
-        "key=${System.getProperty("fcm.api.key")}"))
-    request.addHeader(HTTPHeader(OAuth2.HeaderType.CONTENT_TYPE, OAuth2.ContentType.JSON))
-    request.payload = bytes
+        request.addHeader(
+            HTTPHeader(
+                OAuth2.HeaderType.AUTHORIZATION,
+                "key=${System.getProperty("fcm.api.key")}"
+            )
+        )
+        request.addHeader(HTTPHeader(OAuth2.HeaderType.CONTENT_TYPE, OAuth2.ContentType.JSON))
 
-    return request
-  }
+        if (!ServerEnv.isTest()) {
+            try {
+                service.fetchAsync(request)
+            } catch (e: IOException) {
+                log.info(e.message)
+            }
+        }
+    }
 
-  companion object {
-    private const val FCM_SEND_ENDPOINT = "https://fcm.googleapis.com/fcm/send"
-    private val log = Logger.getLogger(NotificationService::class.java.name)
-  }
+    fun listSubscribedTopics(fcmToken: String): FcmResponse? {
+        val url = URL("https://iid.googleapis.com/iid/v1/$fcmToken?details=true")
+        val request = HTTPRequest(url, HTTPMethod.GET)
+
+        request.addHeader(
+            HTTPHeader(
+                OAuth2.HeaderType.AUTHORIZATION,
+                "key=${System.getProperty("fcm.api.key")}"
+            )
+        )
+        request.addHeader(HTTPHeader(OAuth2.HeaderType.CONTENT_TYPE, OAuth2.ContentType.JSON))
+
+        if (!ServerEnv.isTest()) {
+            try {
+                val httpResponse = service.fetch(request)
+                return ObjectMapper().registerModule(KotlinModule())
+                    .readValue(httpResponse.content, FcmResponse::class.java)
+            } catch (e: IOException) {
+                log.info(e.message)
+            }
+        }
+
+        return null
+    }
+
+    fun send(message: PushMessage) {
+        if (!ServerEnv.isTest()) {
+            try {
+                service.fetchAsync(buildRequest(message.toBytes()))
+            } catch (e: IOException) {
+                log.info(e.message)
+            }
+        }
+    }
+
+    @Throws(MalformedURLException::class)
+    private fun buildRequest(bytes: ByteArray): HTTPRequest {
+        val url = URL(FCM_SEND_ENDPOINT)
+        val request = HTTPRequest(url, HTTPMethod.POST)
+
+        request.addHeader(
+            HTTPHeader(
+                OAuth2.HeaderType.AUTHORIZATION,
+                "key=${System.getProperty("fcm.api.key")}"
+            )
+        )
+        request.addHeader(HTTPHeader(OAuth2.HeaderType.CONTENT_TYPE, OAuth2.ContentType.JSON))
+        request.payload = bytes
+
+        return request
+    }
+
+    companion object {
+        private const val FCM_SEND_ENDPOINT = "https://fcm.googleapis.com/fcm/send"
+        private val log = Logger.getLogger(NotificationService::class.java.name)
+    }
 }
 
 @NoArgs
@@ -126,9 +148,9 @@ data class SubscribeTopicRequest(
     val to: String,
     @JsonProperty("registration_tokens") val registrationTokens: List<String>
 ) {
-  @Throws(IOException::class)
-  fun toBytes(): ByteArray = ObjectMapper().registerModule(KotlinModule()).writeValueAsBytes(this)
+    @Throws(IOException::class)
+    fun toBytes(): ByteArray = ObjectMapper().registerModule(KotlinModule()).writeValueAsBytes(this)
 
-  @Throws(IOException::class)
-  fun toJson(): String = ObjectMapper().registerModule(KotlinModule()).writeValueAsString(this)
+    @Throws(IOException::class)
+    fun toJson(): String = ObjectMapper().registerModule(KotlinModule()).writeValueAsString(this)
 }

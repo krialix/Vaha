@@ -7,9 +7,9 @@ import com.vaha.server.ofy.OfyService.ofy
 
 class ListCategoriesUseCase : UseCase<Collection<CategoryClient>> {
 
-  override fun run(): Collection<CategoryClient> = ofy()
-      .load()
-      .type(Category::class.java)
-      .iterable()
-      .map { CategoryClient.from(it) }
+    override fun run(): Collection<CategoryClient> = ofy()
+        .load()
+        .type(Category::class.java)
+        .iterable()
+        .map { CategoryClient.from(it) }
 }

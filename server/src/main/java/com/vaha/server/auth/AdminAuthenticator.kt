@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletRequest
 @Singleton
 class AdminAuthenticator : Authenticator {
 
-  override fun authenticate(request: HttpServletRequest): User? {
-    val authHeader = request.getHeader(OAuth2.HeaderType.AUTHORIZATION)
+    override fun authenticate(request: HttpServletRequest): User? {
+        val authHeader = request.getHeader(OAuth2.HeaderType.AUTHORIZATION)
 
-    authHeader?.let {
-      if (it.split(" ").last() == Config.ADMIN_EMAIL) {
-        return User("1", Config.ADMIN_EMAIL)
-      }
+        authHeader?.let {
+            if (it.split(" ").last() == Config.ADMIN_EMAIL) {
+                return User("1", Config.ADMIN_EMAIL)
+            }
+        }
+
+        return null
     }
-
-    return null
-  }
 }

@@ -18,69 +18,69 @@ class InsertUserUseCase(
     private val notificationService: NotificationService
 ) : UseCase<UserClient> {
 
-  @Throws(ServiceException::class)
-  override fun run(): UserClient {
-    val payload = UserJsonPayload.from(base64Payload)
+    @Throws(ServiceException::class)
+    override fun run(): UserClient {
+        val payload = UserJsonPayload.from(base64Payload)
 
-    assertUserIsNotRegistered(payload.email, payload.username)
+        assertUserIsNotRegistered(payload.email, payload.username)
 
-    val user = createUserFromPayload(payload)
+        val user = createUserFromPayload(payload)
 
-    val createRequest = createUserRequest(payload, user)
+        val createRequest = createUserRequest(payload, user)
 
-    return ofy().transact(Work {
-      ofy().save().entities(user).now()
+        return ofy().transact(Work {
+            ofy().save().entities(user).now()
 
-      FirebaseAuth.getInstance().createUserAsync(createRequest).get()
+            FirebaseAuth.getInstance().createUserAsync(createRequest).get()
 
-      subscribeToCategories(user.fcmToken)
+            subscribeToCategories(user.fcmToken)
 
-      return@Work UserClient.from(user)
-    })
-  }
-
-  private fun subscribeToCategories(fcmToken: String) {
-    val categories = ofy().transactionless().load().type(Category::class.java).iterable()
-    categories.forEach { notificationService.subscribeTopic(fcmToken, it.topicName) }
-  }
-
-  private fun createUserFromPayload(payload: UserJsonPayload): Account =
-      Account(username = payload.username, email = payload.email, fcmToken = payload.fcmToken)
-
-  @Throws(ConflictException::class)
-  private fun assertUserIsNotRegistered(email: String, username: String) {
-    val emailExists = ofy()
-        .load()
-        .type(Account::class.java)
-        .filter(Account.FIELD_EMAIL, email)
-        .keys()
-        .first()
-        .now() != null
-
-    val usernameExists = ofy()
-        .load()
-        .type(Account::class.java)
-        .filter(Account.FIELD_USERNAME, username)
-        .keys()
-        .first()
-        .now() != null
-
-    if (emailExists) {
-      throw ConflictException("email is in use.")
+            return@Work UserClient.from(user)
+        })
     }
 
-    if (usernameExists) {
-      throw ConflictException("username is in use.")
+    private fun subscribeToCategories(fcmToken: String) {
+        val categories = ofy().transactionless().load().type(Category::class.java).iterable()
+        categories.forEach { notificationService.subscribeTopic(fcmToken, it.topicName) }
     }
-  }
 
-  private fun createUserRequest(
-      payload: UserJsonPayload,
-      account: Account
-  ): UserRecord.CreateRequest =
-      UserRecord.CreateRequest()
-          .setUid(account.websafeId)
-          .setEmail(account.email)
-          .setDisplayName(account.username)
-          .setPassword(payload.password)
+    private fun createUserFromPayload(payload: UserJsonPayload): Account =
+        Account(username = payload.username, email = payload.email, fcmToken = payload.fcmToken)
+
+    @Throws(ConflictException::class)
+    private fun assertUserIsNotRegistered(email: String, username: String) {
+        val emailExists = ofy()
+            .load()
+            .type(Account::class.java)
+            .filter(Account.FIELD_EMAIL, email)
+            .keys()
+            .first()
+            .now() != null
+
+        val usernameExists = ofy()
+            .load()
+            .type(Account::class.java)
+            .filter(Account.FIELD_USERNAME, username)
+            .keys()
+            .first()
+            .now() != null
+
+        if (emailExists) {
+            throw ConflictException("email is in use.")
+        }
+
+        if (usernameExists) {
+            throw ConflictException("username is in use.")
+        }
+    }
+
+    private fun createUserRequest(
+        payload: UserJsonPayload,
+        account: Account
+    ): UserRecord.CreateRequest =
+        UserRecord.CreateRequest()
+            .setUid(account.websafeId)
+            .setEmail(account.email)
+            .setDisplayName(account.username)
+            .setPassword(payload.password)
 }

@@ -98,20 +98,21 @@ data class PushMessage(
     val data: Map<String, String>? = null
 ) {
 
-  @Throws(IOException::class)
-  fun toBytes(): ByteArray = MAPPER.writeValueAsBytes(this)
+    @Throws(IOException::class)
+    fun toBytes(): ByteArray = MAPPER.writeValueAsBytes(this)
 
-  enum class PRIORITY(priority: String) {
-    NORMAL("normal"),
-    HIGH("normal")
-  }
+    enum class PRIORITY(priority: String) {
+        NORMAL("normal"),
+        HIGH("normal")
+    }
 
-  data class NotificationBody(
-      val body: String? = null,
-      val title: String? = null,
-      val icon: String? = null)
+    data class NotificationBody(
+        val body: String? = null,
+        val title: String? = null,
+        val icon: String? = null
+    )
 
-  companion object {
-    private val MAPPER = ObjectMapper().registerModule(KotlinModule())
-  }
+    companion object {
+        private val MAPPER = ObjectMapper().registerModule(KotlinModule())
+    }
 }

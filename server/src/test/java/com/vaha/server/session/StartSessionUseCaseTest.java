@@ -50,8 +50,8 @@ public class StartSessionUseCaseTest {
     new StartSessionUseCase(
             question.getWebsafeId(),
             questionOwner.getWebsafeId(),
-            answerer.getWebsafeId(),
-            notificationService)
+            answerer.getWebsafeId()
+    )
         .run();
 
     Question questionNow = ofy().load().entity(question).now();
@@ -79,15 +79,15 @@ public class StartSessionUseCaseTest {
     new StartSessionUseCase(
         question.getWebsafeId(),
         questionOwner.getWebsafeId(),
-        answerer.getWebsafeId(),
-        notificationService)
+        answerer.getWebsafeId()
+    )
         .run();
 
     new StartSessionUseCase(
         question.getWebsafeId(),
         questionOwner.getWebsafeId(),
-        answerer.getWebsafeId(),
-        notificationService)
+        answerer.getWebsafeId()
+    )
         .run();
   }
 }

@@ -16,20 +16,20 @@ data class SessionClient(
     val pendingAnswerers: Set<Question.PendingAnswerer>
 ) {
 
-  companion object {
-    fun from(question: Question): SessionClient {
-      return SessionClient(
-          id = question.websafeId,
-          ownerId = question.ownerWebsafeId,
-          username = question.username,
-          answererId = question.answererWebsafeId,
-          answererUsername = question.answererUsername,
-          content = question.content,
-          categoryNameEn = question.categoryNameEn,
-          categoryNameTr = question.categoryNameTr,
-          created = question.createdAt.toDate(),
-          pendingAnswerers = question.pendingAnswerers
-      )
+    companion object {
+        fun from(question: Question): SessionClient {
+            return SessionClient(
+                id = question.websafeId,
+                ownerId = question.ownerWebsafeId,
+                username = question.username,
+                answererId = question.answererWebsafeId,
+                answererUsername = question.answererUsername,
+                content = question.content,
+                categoryNameEn = question.categoryNameEn,
+                categoryNameTr = question.categoryNameTr,
+                created = question.createdAt.toDate(),
+                pendingAnswerers = question.pendingAnswerers
+            )
+        }
     }
-  }
 }

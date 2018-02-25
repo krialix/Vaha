@@ -4,12 +4,12 @@ import com.google.api.server.spi.ServiceException
 
 class EndpointsValidator {
 
-  @Throws(ServiceException::class)
-  fun on(validator: Validator): EndpointsValidator {
-    if (!validator.isValid()) {
-      validator.onException()
-      return this
+    @Throws(ServiceException::class)
+    fun on(validator: Validator): EndpointsValidator {
+        if (!validator.isValid()) {
+            validator.onException()
+            return this
+        }
+        return this
     }
-    return this
-  }
 }

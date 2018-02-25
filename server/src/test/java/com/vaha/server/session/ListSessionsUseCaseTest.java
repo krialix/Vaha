@@ -53,8 +53,8 @@ public class ListSessionsUseCaseTest {
     new StartSessionUseCase(
             question.getWebsafeId(),
             questionOwner.getWebsafeId(),
-            answerer.getWebsafeId(),
-            notificationService)
+            answerer.getWebsafeId()
+    )
         .run();
 
     Collection<QuestionClient> questionOwnerResponse =

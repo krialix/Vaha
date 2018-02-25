@@ -4,8 +4,8 @@ import com.google.api.server.spi.ServiceException
 
 interface Validator {
 
-  fun isValid(): Boolean
+    fun isValid(): Boolean
 
-  @Throws(ServiceException::class)
-  fun onException()
+    @Throws(ServiceException::class)
+    fun onException()
 }

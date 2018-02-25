@@ -50,11 +50,11 @@ public class EndSessionUseCaseTest {
     new StartSessionUseCase(
             question.getWebsafeId(),
             questionOwner.getWebsafeId(),
-            answerer.getWebsafeId(),
-            notificationService)
+            answerer.getWebsafeId()
+    )
         .run();
 
-    new EndSessionUseCase(question.getWebsafeId(), 2.0f, false, notificationService).run();
+    new EndSessionUseCase(question.getWebsafeId(), 2.0f, false).run();
 
     Question questionNow = ofy().load().entity(question).now();
     Account questionOwnerNow = ofy().load().entity(questionOwner).now();

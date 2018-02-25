@@ -51,8 +51,8 @@ public class FindActiveSessionUseCaseTest {
     new StartSessionUseCase(
             question.getWebsafeId(),
             questionOwner.getWebsafeId(),
-            answerer.getWebsafeId(),
-            notificationService)
+            answerer.getWebsafeId()
+    )
         .run();
 
     QuestionClient client1 = new FindActiveSessionUseCase(questionOwner.getWebsafeId()).run();
@@ -84,8 +84,8 @@ public class FindActiveSessionUseCaseTest {
     new StartSessionUseCase(
         question.getWebsafeId(),
         questionOwner.getWebsafeId(),
-        answerer.getWebsafeId(),
-        notificationService)
+        answerer.getWebsafeId()
+    )
         .run();
 
     QuestionClient client1 = new FindActiveSessionUseCase(questionOwner.getWebsafeId()).run();

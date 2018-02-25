@@ -10,20 +10,21 @@ class BadRequestValidator private constructor(
     private val message: String
 ) : Validator {
 
-  override fun isValid(): Boolean {
-    return if (any is String) {
-      !Strings.isNullOrEmpty(any as String?)
-    } else {
-      any != null
+    override fun isValid(): Boolean {
+        return if (any is String) {
+            !Strings.isNullOrEmpty(any as String?)
+        } else {
+            any != null
+        }
     }
-  }
 
-  @Throws(ServiceException::class)
-  override fun onException() {
-    throw BadRequestException(message)
-  }
+    @Throws(ServiceException::class)
+    override fun onException() {
+        throw BadRequestException(message)
+    }
 
-  companion object {
-    fun create(any: Any?, message: String): BadRequestValidator = BadRequestValidator(any, message)
-  }
+    companion object {
+        fun create(any: Any?, message: String): BadRequestValidator =
+            BadRequestValidator(any, message)
+    }
 }

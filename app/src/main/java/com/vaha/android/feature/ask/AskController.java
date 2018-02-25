@@ -14,7 +14,7 @@ import android.widget.Spinner;
 
 import com.vaha.android.R;
 import com.vaha.android.VahaApplication;
-import com.vaha.android.data.repository.QuestionRepository;
+import com.vaha.android.data.repository.SessionRepository;
 import com.vaha.android.feature.base.BaseController;
 import com.vaha.android.util.BundleBuilder;
 
@@ -44,7 +44,7 @@ public class AskController extends BaseController {
   @BindView(R.id.et_ask_content)
   EditText etContent;
 
-  @Inject QuestionRepository questionRepository;
+  @Inject SessionRepository sessionRepository;
 
   private ProgressDialog progressDialog;
 
@@ -101,7 +101,7 @@ public class AskController extends BaseController {
     final String categoryId = getArgs().getString(KEY_CATEGORY_ID, "");
 
     disposable.add(
-        questionRepository
+        sessionRepository
             .insertQuestion(content, categoryId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

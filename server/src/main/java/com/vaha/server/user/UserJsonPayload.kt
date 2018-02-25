@@ -10,15 +10,16 @@ internal data class UserJsonPayload(
     val username: String,
     val email: String,
     val password: String,
-    val fcmToken: String) {
+    val fcmToken: String
+) {
 
-  companion object {
-    fun from(base64Payload: String): UserJsonPayload {
-      val decodedBytes = BaseEncoding.base64Url().decode(base64Payload)
-      val payload = String(decodedBytes, Charset.defaultCharset())
+    companion object {
+        fun from(base64Payload: String): UserJsonPayload {
+            val decodedBytes = BaseEncoding.base64Url().decode(base64Payload)
+            val payload = String(decodedBytes, Charset.defaultCharset())
 
-      val mapper = ObjectMapper()
-      return mapper.readValue(payload, UserJsonPayload::class.java)
+            val mapper = ObjectMapper()
+            return mapper.readValue(payload, UserJsonPayload::class.java)
+        }
     }
-  }
 }

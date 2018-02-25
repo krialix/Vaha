@@ -12,6 +12,8 @@ public @interface Task {
   Type value() default Type.PUSH;
 
   enum Type {
-    PUSH, PULL, CRON
+    PUSH,
+    PULL,
+    CRON
   }
 }

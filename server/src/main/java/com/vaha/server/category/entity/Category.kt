@@ -18,22 +18,22 @@ data class Category(
     var questionCount: Int = 0
 ) {
 
-  val key: Key<Category> = Key.create(Category::class.java, id)
+    val key: Key<Category> = Key.create(Category::class.java, id)
 
-  val websafeId: String = key.toWebSafeString()
+    val websafeId: String = key.toWebSafeString()
 
-  val topicName: String =
-      displayName
-          .replace(" ", "_")
-          .replace("&", "and")
-          .toLowerCase()
-          .trim()
+    val topicName: String =
+        displayName
+            .replace(" ", "_")
+            .replace("&", "and")
+            .toLowerCase()
+            .trim()
 
-  fun resetToDefault(): Category {
-    return copy(questionCount = 0)
-  }
+    fun resetToDefault(): Category {
+        return copy(questionCount = 0)
+    }
 
-  companion object {
-    fun allocateId(): Long = factory().allocateId(Category::class.java).id
-  }
+    companion object {
+        fun allocateId(): Long = factory().allocateId(Category::class.java).id
+    }
 }

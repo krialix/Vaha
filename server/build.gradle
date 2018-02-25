@@ -30,7 +30,7 @@ noArg {
     annotation("com.vaha.server.common.annotations.NoArgs")
 }
 
-final APP_ENGINE_VERSION = '1.9.60'
+final APP_ENGINE_VERSION = '1.9.62'
 final JACKSON_VERSION = '2.9.4'
 
 dependencies {
@@ -54,9 +54,7 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-core:$JACKSON_VERSION"
     implementation "com.fasterxml.jackson.core:jackson-annotations:$JACKSON_VERSION"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$JACKSON_VERSION"
-    implementation ('com.google.firebase:firebase-admin:5.8.0') {
-        exclude group: 'com.google.guava'
-    }
+    implementation 'com.google.firebase:firebase-admin:5.9.0'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.google.truth:truth:0.39'

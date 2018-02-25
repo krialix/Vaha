@@ -13,31 +13,31 @@ import javax.servlet.http.HttpServletRequest
 @Singleton
 class FirebaseAuthenticator : Authenticator {
 
-  override fun authenticate(request: HttpServletRequest): User? {
-    val authHeader = request.getHeader(OAuth2.HeaderType.AUTHORIZATION)
+    override fun authenticate(request: HttpServletRequest): User? {
+        val authHeader = request.getHeader(OAuth2.HeaderType.AUTHORIZATION)
 
-    if (authHeader.isNotBlank() && authHeader.contains(OAuth2.OAUTH_HEADER_NAME)) {
-      val idToken = authHeader.replace("Bearer ", "").trim()
+        if (authHeader.isNotBlank() && authHeader.contains(OAuth2.OAUTH_HEADER_NAME)) {
+            val idToken = authHeader.replace("Bearer ", "").trim()
 
-      val firebaseToken = FirebaseAuth.getInstance().verifyIdTokenAsync(idToken).get()
+            val firebaseToken = FirebaseAuth.getInstance().verifyIdTokenAsync(idToken).get()
 
-      val accountKey = findAccountKeyByEmail(firebaseToken.email)
+            val accountKey = findAccountKeyByEmail(firebaseToken.email)
 
-      return User(accountKey?.toWebSafeString(), firebaseToken.email)
+            return User(accountKey?.toWebSafeString(), firebaseToken.email)
+        }
+
+        return null
     }
 
-    return null
-  }
+    companion object {
+        private fun findAccountKeyByEmail(email: String): Key<Account>? =
+            ofy().load()
+                .type(Account::class.java)
+                .filter(Account.FIELD_EMAIL, email)
+                .keys()
+                .first()
+                .now()
 
-  companion object {
-    private fun findAccountKeyByEmail(email: String): Key<Account>? =
-        ofy().load()
-            .type(Account::class.java)
-            .filter(Account.FIELD_EMAIL, email)
-            .keys()
-            .first()
-            .now()
-
-    private val logger = Logger.getLogger(FirebaseAuthenticator::class.java.name)
-  }
+        private val logger = Logger.getLogger(FirebaseAuthenticator::class.java.name)
+    }
 }

@@ -17,11 +17,11 @@
         <init-param>
             <param-name>services</param-name>
             <param-value>
-                com.vaha.server.api.AdminEndpoint,
-                com.vaha.server.api.CategoryEndpoint,
-                com.vaha.server.api.MeEndpoint,
-                com.vaha.server.api.QuestionEndpoint,
-                com.vaha.server.api.SessionEndpoint
+                com.vaha.server.admin.AdminEndpoint,
+                com.vaha.server.category.CategoryEndpoint,
+                com.vaha.server.user.MeEndpoint,
+                com.vaha.server.question.QuestionEndpoint,
+                com.vaha.server.question.SessionEndpoint
             </param-value>
         </init-param>
     </servlet>

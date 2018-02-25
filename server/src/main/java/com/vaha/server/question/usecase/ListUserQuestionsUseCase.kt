@@ -17,38 +17,38 @@ class ListUserQuestionsUseCase(
     private val userId: String
 ) : UseCase<CollectionResponse<SessionClient>> {
 
-  override fun run(): CollectionResponse<SessionClient> {
-    val qi = getQueryResultIterator()
+    override fun run(): CollectionResponse<SessionClient> {
+        val qi = getQueryResultIterator()
 
-    return qi
-        .asSequence()
-        .map { it.copy(owner = true, requestSent = false) }
-        .map { SessionClient.from(it) }
-        .toList()
-        .let {
-          CollectionResponse.builder<SessionClient>()
-              .setItems(it)
-              .setNextPageToken(qi.cursor.toWebSafeString())
-              .build()
-        }
-  }
-
-  private fun getQueryResultIterator(): QueryResultIterator<Question> {
-    var query = ofy()
-        .load()
-        .type(Question::class.java)
-        .ancestor(Key.create<Account>(userId))
-        .filter(Question.FIELD_STATUS, status)
-        .order("-${Question.FIELD_CREATED_AT}")
-
-    if (cursor != null) {
-      query = query.startAt(Cursor.fromWebSafeString(cursor))
+        return qi
+            .asSequence()
+            .map { it.copy(owner = true, requestSent = false) }
+            .map { SessionClient.from(it) }
+            .toList()
+            .let {
+                CollectionResponse.builder<SessionClient>()
+                    .setItems(it)
+                    .setNextPageToken(qi.cursor.toWebSafeString())
+                    .build()
+            }
     }
-    query = query.limit(DEFAULT_LIST_LIMIT)
-    return query.iterator()
-  }
 
-  companion object {
-    private const val DEFAULT_LIST_LIMIT = 100
-  }
+    private fun getQueryResultIterator(): QueryResultIterator<Question> {
+        var query = ofy()
+            .load()
+            .type(Question::class.java)
+            .ancestor(Key.create<Account>(userId))
+            .filter(Question.FIELD_STATUS, status)
+            .order("-${Question.FIELD_CREATED_AT}")
+
+        if (cursor != null) {
+            query = query.startAt(Cursor.fromWebSafeString(cursor))
+        }
+        query = query.limit(DEFAULT_LIST_LIMIT)
+        return query.iterator()
+    }
+
+    companion object {
+        private const val DEFAULT_LIST_LIMIT = 100
+    }
 }

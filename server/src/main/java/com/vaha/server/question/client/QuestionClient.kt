@@ -18,18 +18,18 @@ data class QuestionClient(
     val requestSent: Boolean
 ) {
 
-  constructor(question: Question) : this(
-      question.websafeId,
-      question.ownerWebsafeId,
-      question.owner,
-      question.answererWebsafeId,
-      question.username,
-      question.content,
-      question.categoryWebsafeId,
-      question.categoryNameEn,
-      question.categoryNameTr,
-      question.questionStatus.name,
-      Date(question.createdAt.millis),
-      question.requestSent
-  )
+    constructor(question: Question) : this(
+        question.websafeId,
+        question.ownerWebsafeId,
+        question.owner,
+        question.answererWebsafeId,
+        question.username,
+        question.content,
+        question.categoryWebsafeId,
+        question.categoryNameEn,
+        question.categoryNameTr,
+        question.questionStatus.name,
+        Date(question.createdAt.millis),
+        question.requestSent
+    )
 }

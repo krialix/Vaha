@@ -9,14 +9,14 @@ import com.vaha.server.util.CategoryUtil
 
 class RefreshCategoriesUseCase : UseCase<Unit> {
 
-  private val imagesService: ImagesService = ImagesServiceFactory.getImagesService()
+    private val imagesService: ImagesService = ImagesServiceFactory.getImagesService()
 
-  override fun run() {
-    ofy()
-        .load()
-        .type(Category::class.java)
-        .iterable()
-        .map { it.copy(image = CategoryUtil.getImage(it.displayName, imagesService)) }
-        .let { ofy().save().entities(it) }
-  }
+    override fun run() {
+        ofy()
+            .load()
+            .type(Category::class.java)
+            .iterable()
+            .map { it.copy(image = CategoryUtil.getImage(it.displayName, imagesService)) }
+            .let { ofy().save().entities(it) }
+    }
 }
