@@ -7,64 +7,62 @@ import com.vaha.server.base.UseCase
 import com.vaha.server.event.StartSessionEvent
 import com.vaha.server.ofy.OfyService.ofy
 import com.vaha.server.question.entity.Question
-import com.vaha.server.question.entity.Question.QuestionStatus
-import com.vaha.server.question.entity.UserSessionRel
+import com.vaha.server.question.entity.Question.Status
 import com.vaha.server.user.entity.Account
 import com.vaha.server.util.ServerEnv
 
 class StartSessionUseCase(
     private val questionId: String,
-    private val userId: String,
-    private val answererId: String
+    private val requesterId: String
 ) : UseCase<Unit> {
 
     override fun run() {
-        val requesterUserKey = Key.create<Account>(userId)
         val questionKey = Key.create<Question>(questionId)
         val questionOwnerUserKey = questionKey.getParent<Account>()
-        val answererUserKey = Key.create<Account>(answererId)
+        val requesterUserKey = Key.create<Account>(requesterId)
 
-        if (!requesterUserKey.equivalent(questionOwnerUserKey)) {
-            throw BadRequestException("Only question owner can start a session")
+        if (requesterUserKey.equivalent(questionOwnerUserKey)) {
+            throw BadRequestException("You can not start session for your question")
         }
 
         val fetched =
-            ofy().load().keys(questionKey, answererUserKey) as Map<*, *>
+            ofy().load().keys(questionKey, questionOwnerUserKey, requesterUserKey) as Map<*, *>
 
         val question = fetched[questionKey] as Question
-        val answerer = fetched[answererUserKey] as Account
+        val questionOwner = fetched[questionOwnerUserKey] as Account
+        val requester = fetched[requesterUserKey] as Account
 
-        question.questionStatus = QuestionStatus.IN_PROGRESS
-        question.answerer = Ref.create(answerer)
+        if (!question.pendingUserRequests.any { it.userKey.equivalent(requesterUserKey) }) {
+            throw BadRequestException("You should send session request first")
+        }
 
-        answerer.answerCount.inc()
-
-        val userSessionRels = ofy().load().type(UserSessionRel::class.java)
-            .filter("questionKey", questionKey)
-            .list()
-            .asSequence()
-            .map {
-                if (it.userKey.equivalent(requesterUserKey)) {
-                    return@map it.copy(sessionStatus = UserSessionRel.SessionStatus.IN_PROGRESS)
-                }
-
-                return@map it.copy(sessionStatus = UserSessionRel.SessionStatus.DISCARDED)
+        question.answerer?.let {
+            if (it.equivalent(requesterUserKey)) {
+                throw BadRequestException("You can not answer to same question")
             }
-            .toList()
+        }
 
-        val pendingSaveList = mutableListOf<Any>()
-        pendingSaveList.add(question)
-        pendingSaveList.add(answerer)
-        pendingSaveList.addAll(userSessionRels)
+        question.apply {
+            status = Status.IN_PROGRESS
+            answerer = Ref.create(requester)
+            pendingUserRequests.removeIf { it.userKey.equivalent(requesterUserKey) }
+        }
+
+        requester.apply {
+            answerCount++
+            pendingQuestionKeys.removeIf { it.equivalent(questionKey) }
+            inProgressQuestionKeys.add(questionKey)
+        }
+
+        questionOwner.inProgressQuestionKeys.add(questionKey)
 
         ofy().transact {
+            val result = ofy().save().entities(question, questionOwner, requester)
             if (ServerEnv.isTest()) {
-                ofy().save().entities(pendingSaveList).now()
-            } else {
-                ofy().save().entities(pendingSaveList)
+                result.now()
             }
 
-            StartSessionEvent(questionId, answererId, answerer.username, answerer.fcmToken)
+            StartSessionEvent(questionId, requesterId, requester.username, requester.fcmToken)
         }
     }
 }

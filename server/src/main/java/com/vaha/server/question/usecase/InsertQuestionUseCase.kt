@@ -10,6 +10,7 @@ import com.vaha.server.ofy.OfyService.ofy
 import com.vaha.server.question.client.QuestionClient
 import com.vaha.server.question.entity.Question
 import com.vaha.server.user.entity.Account
+import com.vaha.server.util.ServerEnv
 
 class InsertQuestionUseCase(
     private val ownerId: String,
@@ -29,19 +30,23 @@ class InsertQuestionUseCase(
             throw BadRequestException("Daily question limit is over")
         }
 
-        user.questionCount.inc()
-        user.dailyQuestionCount.dec()
-        category.questionCount.inc()
+        user.apply {
+            questionCount++
+            dailyQuestionCount--
+        }
+        category.questionCount++
 
         val question = Question(
             parent = ownerKey,
             username = user.username,
             content = content,
-            category = Ref.create(category),
-            owner = true
+            category = Ref.create(category)
         )
 
-        ofy().save().entities(question, user, category)
+        val result = ofy().save().entities(question, user, category)
+        if (ServerEnv.isTest()) {
+            result.now()
+        }
 
         NewQuestionEvent(
             user.websafeId,
@@ -50,6 +55,6 @@ class InsertQuestionUseCase(
             category.topicName
         )
 
-        return QuestionClient(question)
+        return QuestionClient.from(question = question, isOwner = true)
     }
 }

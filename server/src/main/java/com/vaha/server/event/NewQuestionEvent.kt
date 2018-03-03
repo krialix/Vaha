@@ -21,6 +21,8 @@ class NewQuestionEvent(
             .setTopic(topic)
             .build()
 
-        FirebaseMessaging.getInstance().sendAsync(message, ServerEnv.isDev())
+        if (!ServerEnv.isTest()) {
+            FirebaseMessaging.getInstance().sendAsync(message, ServerEnv.isDev())
+        }
     }
 }

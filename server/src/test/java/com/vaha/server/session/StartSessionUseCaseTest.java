@@ -1,10 +1,10 @@
 package com.vaha.server.session;
 
-import com.google.api.server.spi.response.ConflictException;
-import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
+import com.google.api.server.spi.response.BadRequestException;
+import com.googlecode.objectify.Ref;
 import com.vaha.server.category.entity.Category;
-import com.vaha.server.notification.NotificationService;
 import com.vaha.server.question.entity.Question;
+import com.vaha.server.question.usecase.RequestSessionUseCase;
 import com.vaha.server.question.usecase.StartSessionUseCase;
 import com.vaha.server.rule.AppEngineRule;
 import com.vaha.server.user.entity.Account;
@@ -27,67 +27,62 @@ public class StartSessionUseCaseTest {
 
   @Rule
   public final AppEngineRule rule =
-      new AppEngineRule.Builder().withDatastore().withImagesService().withUrlFetch().build();
-
-  private NotificationService notificationService;
+      new AppEngineRule.Builder().withDatastore().withImagesService().build();
 
   @Before
-  public void setUp() throws Exception {
-    notificationService = new NotificationService(URLFetchServiceFactory.getURLFetchService());
-
+  public void setUp() {
     fact().register(Account.class);
     fact().register(Question.class);
     fact().register(Category.class);
   }
 
   @Test
-  public void testStartSession() throws Exception {
+  public void testStartSession() {
     Account questionOwner = newAccount();
     Account answerer = newAccount();
     Category category = newCategory("c1");
     Question question = newQuestion(questionOwner, category);
 
+    new RequestSessionUseCase(answerer.getWebsafeId(), question.getKey().toWebSafeString()).run();
+
     new StartSessionUseCase(
-            question.getWebsafeId(),
-            questionOwner.getWebsafeId(),
-            answerer.getWebsafeId()
-    )
+            question.getKey().toWebSafeString(),
+        answerer.getWebsafeId())
         .run();
 
     Question questionNow = ofy().load().entity(question).now();
     Account questionOwnerNow = ofy().load().entity(questionOwner).now();
     Account answererNow = ofy().load().entity(answerer).now();
 
-    assertThat(questionNow.getQuestionStatus())
-        .isEqualTo(Question.QuestionStatus.IN_PROGRESS);
-    assertThat(questionNow.getAnswerer().getKey()).isEqualTo(answerer.getKey());
+    assertThat(questionNow.getStatus()).isEqualTo(Question.Status.IN_PROGRESS);
+    assertThat(questionNow.getAnswerer()).isEqualTo(Ref.create(answerer.getKey()));
+    assertThat(questionNow.getPendingUserRequests())
+        .doesNotContain(
+            new Question.PendingUserRequest(
+                answerer.getKey(), answerer.getUsername(), answerer.getUserRating().getRating()));
 
-    assertThat(questionOwnerNow.getActiveQuestionKeys()).isEqualTo(question.getKey());
-    assertThat(answererNow.getActiveQuestionKeys()).isEqualTo(question.getKey());
+    assertThat(questionOwnerNow.getInProgressQuestionKeys()).containsExactly(question.getKey());
 
-    assertThat(questionOwnerNow.getQuestionKeys()).hasSize(1);
-    assertThat(answererNow.getQuestionKeys()).hasSize(1);
+    assertThat(answererNow.getAnswerCount()).isEqualTo(1);
+    assertThat(answererNow.getPendingQuestionKeys()).doesNotContain(question.getKey());
+    assertThat(answererNow.getInProgressQuestionKeys()).hasSize(1);
   }
 
-  @Test(expected = ConflictException.class)
-  public void testStartSession_hasSessionError() throws Exception {
+  @Test(expected = BadRequestException.class)
+  public void testStartSession_hasSessionError() {
     Account questionOwner = newAccount();
     Account answerer = newAccount();
     Category category = newCategory("c1");
     Question question = newQuestion(questionOwner, category);
 
     new StartSessionUseCase(
-        question.getWebsafeId(),
-        questionOwner.getWebsafeId(),
-        answerer.getWebsafeId()
-    )
+            question.getKey().toWebSafeString(),
+        answerer.getWebsafeId())
         .run();
 
     new StartSessionUseCase(
-        question.getWebsafeId(),
-        questionOwner.getWebsafeId(),
-        answerer.getWebsafeId()
-    )
+            question.getKey().toWebSafeString(),
+        answerer.getWebsafeId())
         .run();
   }
 }

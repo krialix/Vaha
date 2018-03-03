@@ -82,6 +82,7 @@ android {
 kapt {
     correctErrorTypes = true
     useBuildCache = true
+    mapDiagnosticLocations = true
 }
 
 project.android.buildTypes.all { buildType ->

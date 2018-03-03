@@ -30,6 +30,6 @@ class UpdateQuestionUseCase(
 
         ofy().save().entities(question, user)
 
-        return QuestionClient(question)
+        return QuestionClient.from(question = question, isOwner = true)
     }
 }

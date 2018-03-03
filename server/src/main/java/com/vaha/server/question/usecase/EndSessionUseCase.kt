@@ -7,8 +7,7 @@ import com.vaha.server.event.ReaskedQuestionEvent
 import com.vaha.server.event.SessionEndedEvent
 import com.vaha.server.ofy.OfyService.ofy
 import com.vaha.server.question.entity.Question
-import com.vaha.server.question.entity.Question.QuestionStatus
-import com.vaha.server.question.entity.UserSessionRel
+import com.vaha.server.question.entity.Question.Status
 import com.vaha.server.user.entity.Account
 import com.vaha.server.util.ServerEnv
 
@@ -27,24 +26,18 @@ class EndSessionUseCase(
         var question = fetched[questionKey] as Question
         val questionOwner = fetched[questionOwnerKey] as Account
 
-        var answerer = question.answerer!!.get()
+        val answerer = question.answerer!!.get()
 
-        if (question.questionStatus != QuestionStatus.IN_PROGRESS) {
+        if (question.status != Status.IN_PROGRESS) {
             throw BadRequestException("Session is not currently active")
         }
 
-        question = question.copy(answerer = null)
+        answerer.apply {
+            userRating = Account.Rating.calculateNewRating(answerer.userRating, rating)
+            inProgressQuestionKeys.remove(questionKey)
+        }
 
-        val userSessionRel =
-            ofy().load().type(UserSessionRel::class.java)
-                .filter("questionKey", questionKey)
-                .filter("sessionStatus", UserSessionRel.SessionStatus.IN_PROGRESS)
-                .first()
-                .now()
-
-        userSessionRel.sessionStatus = UserSessionRel.SessionStatus.COMPLETED
-
-        answerer.userRating = Account.Rating.calculateNewRating(answerer.userRating, rating)
+        questionOwner.inProgressQuestionKeys.remove(questionKey)
 
         var sendSessionEndedNotification = true
 
@@ -55,15 +48,14 @@ class EndSessionUseCase(
                 throw BadRequestException("re ask limit is over")
             }
 
-            question.copy(questionStatus = QuestionStatus.AVAILABLE, reAsk = question.reAsk.dec())
+            question.copy(status = Status.AVAILABLE, reAsk = question.reAsk.dec())
         } else {
-            question.copy(questionStatus = QuestionStatus.COMPLETED)
+            question.copy(status = Status.COMPLETED)
         }
 
+        val result = ofy().save().entities(question, answerer, questionOwner)
         if (ServerEnv.isTest()) {
-            ofy().save().entities(question, answerer, userSessionRel).now()
-        } else {
-            ofy().save().entities(question, answerer, userSessionRel)
+            result.now()
         }
 
         if (reasked) {

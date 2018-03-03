@@ -15,9 +15,8 @@ import com.vaha.server.endpointsvalidator.validator.AuthValidator
 import com.vaha.server.endpointsvalidator.validator.BadRequestValidator
 import com.vaha.server.notification.NotificationService
 import com.vaha.server.ofy.OfyService.ofy
-import com.vaha.server.question.client.SessionClient
+import com.vaha.server.question.client.QuestionClient
 import com.vaha.server.question.entity.Question
-import com.vaha.server.question.usecase.ListUserQuestionsUseCase
 import com.vaha.server.user.client.UserClient
 import com.vaha.server.user.entity.Account
 import com.vaha.server.user.usecase.GetUserUseCase
@@ -84,7 +83,6 @@ internal class MeEndpoint : BaseEndpoint() {
             .map {
                 TopicResponse(
                     displayName = it.displayName,
-                    displayNameTr = it.displayNameTr,
                     topicName = it.topicName,
                     subscribed = listSubscribedTopics?.contains(it.topicName) ?: false
                 )
@@ -117,12 +115,14 @@ internal class MeEndpoint : BaseEndpoint() {
     @Throws(ServiceException::class)
     fun listQuestions(
         @Nullable @Named("cursor") cursor: String?,
-        @Named("status") status: Question.QuestionStatus,
+        @Named("status") status: Question.Status,
         user: User?
-    ): CollectionResponse<SessionClient> {
+    ): CollectionResponse<QuestionClient>? {
 
         EndpointsValidator().on(AuthValidator.create(user))
 
-        return ListUserQuestionsUseCase(cursor, status, user!!.id).run()
+        //return ListUserQuestionsUseCase(cursor, status, user!!.id).run()
+
+        return null
     }
 }

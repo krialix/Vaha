@@ -26,7 +26,8 @@ data class Account(
     var fcmToken: String,
     var createdAt: DateTime = DateTime.now(UTC),
     var dailyQuestionCount: Int = 5,
-    var questionKeys: @JvmSuppressWildcards List<Key<Question>> = emptyList()
+    var inProgressQuestionKeys: @JvmSuppressWildcards MutableSet<Key<Question>> = mutableSetOf(),
+    var pendingQuestionKeys: @JvmSuppressWildcards MutableSet<Key<Question>> = mutableSetOf()
 ) {
 
     val key: Key<Account>
@@ -45,14 +46,18 @@ data class Account(
             questionCount = 0,
             answerCount = 0,
             userRating = Account.Rating(),
-            questionKeys = emptyList(),
+            inProgressQuestionKeys = mutableSetOf(),
+            pendingQuestionKeys = mutableSetOf(),
             dailyQuestionCount = 5
         )
     }
 
     @OnLoad
     fun onLoad() {
-        questionKeys = if (questionKeys == null) emptyList() else questionKeys
+        inProgressQuestionKeys =
+                if (inProgressQuestionKeys == null) mutableSetOf() else inProgressQuestionKeys
+        pendingQuestionKeys =
+                if (pendingQuestionKeys == null) mutableSetOf() else pendingQuestionKeys
     }
 
     companion object {
@@ -68,7 +73,7 @@ data class Account(
                 val oldRaterCount = oldRating.raterCount
                 val newRaterCount = oldRaterCount.inc()
                 val newRating = ((oldRating.rating * oldRaterCount) + rating) / newRaterCount
-                return Rating(oldRaterCount, newRating)
+                return Rating(newRaterCount, newRating)
             }
         }
     }

@@ -14,6 +14,8 @@ class SessionEndedEvent(username: String, token: String) {
             .setToken(token)
             .build()
 
-        FirebaseMessaging.getInstance().sendAsync(message, ServerEnv.isDev())
+        if (!ServerEnv.isTest()) {
+            FirebaseMessaging.getInstance().sendAsync(message, ServerEnv.isDev())
+        }
     }
 }

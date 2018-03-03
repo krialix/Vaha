@@ -7,8 +7,8 @@ import com.google.api.server.spi.config.ApiMethod
 import com.google.api.server.spi.config.ApiMethod.HttpMethod.GET
 import com.google.api.server.spi.config.ApiMethod.HttpMethod.POST
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory
-import com.vaha.server.base.BaseEndpoint
 import com.vaha.server.auth.AdminAuthenticator
+import com.vaha.server.base.BaseEndpoint
 import com.vaha.server.category.client.CategoryClient
 import com.vaha.server.category.entity.Category
 import com.vaha.server.category.usecase.InsertCategoryUseCase
@@ -30,15 +30,11 @@ internal class AdminEndpoint : BaseEndpoint() {
 
     @ApiMethod(name = "admin.categories.insert", path = "admin/categories", httpMethod = POST)
     @Throws(ServiceException::class)
-    fun insert(
-        @Named("displayName") displayName: String,
-        @Named("displayNameTr") displayNameTr: String,
-        user: User?
-    ): CategoryClient {
+    fun insert(@Named("displayName") displayName: String, user: User?): CategoryClient {
 
         EndpointsValidator().on(AuthValidator.create(user))
 
-        return InsertCategoryUseCase(displayName, displayNameTr).run()
+        return InsertCategoryUseCase(displayName).run()
     }
 
     @ApiMethod(name = "admin.refreshTopics", path = "admin/refreshTopics", httpMethod = GET)

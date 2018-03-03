@@ -10,7 +10,7 @@ object CategoryUtil {
 
     @JvmStatic
     fun getImage(displayName: String, imagesService: ImagesService): String =
-        when (ServerEnv.isDev()) {
+        when (ServerEnv.isDev() || ServerEnv.isTest()) {
             true -> DUMMY_IMAGE_URL
             false -> displayName
                 .trim()

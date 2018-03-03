@@ -2,7 +2,7 @@ package com.vaha.server.question.cron
 
 import com.vaha.server.ofy.OfyService.ofy
 import com.vaha.server.question.entity.Question
-import com.vaha.server.question.entity.Question.QuestionStatus
+import com.vaha.server.question.entity.Question.Status
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone.UTC
 import org.joda.time.Days
@@ -32,11 +32,11 @@ class DeleteExpiredQuestionsCron : HttpServlet() {
             .type(Question::class.java)
             .iterable()
             .filter {
-                it.questionStatus == QuestionStatus.AVAILABLE ||
-                        it.questionStatus == QuestionStatus.IN_PROGRESS
+                it.status == Status.AVAILABLE ||
+                        it.status == Status.IN_PROGRESS
             }
             .filter { Days.daysBetween(DateTime.now(UTC), it.createdAt).days == 1 }
-            .map { it.copy(questionStatus = QuestionStatus.AUTO_CLOSED) }
+            .map { it.copy(status = Status.AUTO_CLOSED) }
             .let { ofy().transact { ofy().save().entities(it) } }
     }
 }

@@ -4,14 +4,14 @@ import com.google.api.server.spi.ServiceException
 import com.google.api.server.spi.auth.common.User
 import com.google.api.server.spi.config.ApiMethod
 import com.google.api.server.spi.config.ApiMethod.HttpMethod.*
+import com.google.api.server.spi.response.BadRequestException
 import com.google.api.server.spi.response.CollectionResponse
 import com.vaha.server.base.BaseEndpoint
 import com.vaha.server.endpointsvalidator.EndpointsValidator
 import com.vaha.server.endpointsvalidator.validator.AuthValidator
 import com.vaha.server.question.client.QuestionClient
-import com.vaha.server.question.usecase.InsertQuestionUseCase
-import com.vaha.server.question.usecase.ListAvailableQuestionsUseCase
-import com.vaha.server.question.usecase.UpdateQuestionUseCase
+import com.vaha.server.question.entity.Question
+import com.vaha.server.question.usecase.*
 import javax.annotation.Nullable
 import javax.inject.Named
 
@@ -48,12 +48,17 @@ internal class QuestionEndpoint : BaseEndpoint() {
     @Throws(ServiceException::class)
     fun list(
         @Nullable @Named("cursor") cursor: String?,
-        @Named("sort") sort: ListAvailableQuestionsUseCase.QuestionSort,
+        @Named("sort") sort: Question.Status,
         user: User?
     ): CollectionResponse<QuestionClient> {
 
         EndpointsValidator().on(AuthValidator.create(user))
 
-        return ListAvailableQuestionsUseCase(cursor, user!!.id, sort).run()
+        return when(sort) {
+            Question.Status.AVAILABLE -> ListAvailableQuestionsUseCase(cursor, user!!.id).run()
+            Question.Status.IN_PROGRESS -> ListInProgressQuestionsUseCase(cursor, user!!.id).run()
+            Question.Status.COMPLETED -> ListCompletedQuestionsUseCase(cursor, user!!.id).run()
+            Question.Status.AUTO_CLOSED -> throw BadRequestException("not supported")
+        }
     }
 }

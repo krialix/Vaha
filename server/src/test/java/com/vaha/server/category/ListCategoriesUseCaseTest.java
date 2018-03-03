@@ -1,7 +1,5 @@
 package com.vaha.server.category;
 
-import com.google.appengine.api.images.ImagesService;
-import com.google.appengine.api.images.ImagesServiceFactory;
 import com.vaha.server.category.client.CategoryClient;
 import com.vaha.server.category.entity.Category;
 import com.vaha.server.category.usecase.InsertCategoryUseCase;
@@ -27,18 +25,16 @@ public class ListCategoriesUseCaseTest {
       new AppEngineRule.Builder().withDatastore().withImagesService().build();
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     fact().register(Category.class);
 
-    ImagesService imagesService = ImagesServiceFactory.getImagesService();
-
-    for (int i = 0; i < 3; i++) {
-      new InsertCategoryUseCase("test" + i, ).run();
+    for (int i = 1; i < 4; i++) {
+      new InsertCategoryUseCase("test" + i).run();
     }
   }
 
   @Test
-  public void testListCategories() throws Exception {
+  public void testListCategories() {
     Collection<CategoryClient> clients = new ListCategoriesUseCase().run();
 
     assertThat(clients).hasSize(3);

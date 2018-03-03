@@ -30,6 +30,12 @@ noArg {
     annotation("com.vaha.server.common.annotations.NoArgs")
 }
 
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+    mapDiagnosticLocations = true
+}
+
 final APP_ENGINE_VERSION = '1.9.62'
 final JACKSON_VERSION = '2.9.4'
 

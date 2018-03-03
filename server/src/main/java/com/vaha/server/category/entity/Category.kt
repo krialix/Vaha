@@ -13,17 +13,15 @@ import com.vaha.server.ofy.OfyService.factory
 data class Category(
     @Id var id: Long = allocateId(),
     var displayName: String,
-    var displayNameTr: String,
     var image: String,
     var questionCount: Int = 0
 ) {
 
-    val key: Key<Category> = Key.create(Category::class.java, id)
+    val key: Key<Category>
+        get() = Key.create(this)
 
-    val websafeId: String = key.toWebSafeString()
-
-    val topicName: String =
-        displayName
+    val topicName: String
+        get() = displayName
             .replace(" ", "_")
             .replace("&", "and")
             .toLowerCase()
