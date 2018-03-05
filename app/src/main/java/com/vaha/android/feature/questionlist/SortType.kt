@@ -1,6 +1,6 @@
 package com.vaha.android.feature.questionlist
 
-enum class QuestionType {
+enum class SortType {
     AVAILABLE,
     ACTIVE_SESSION,
     COMPLETED_SESSION,

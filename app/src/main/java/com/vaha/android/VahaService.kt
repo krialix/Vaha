@@ -50,7 +50,7 @@ class VahaService : Service() {
     private fun sendAnswererAvailableRequest(intent: Intent) {
         val questionId = intent.getStringExtra("FCM_PAYLOAD_QUESTION_ID")
 
-        sessionRepository.sendAnswererAvailable(questionId)
+        sessionRepository.sendRequest(questionId)
             .subscribeOn(Schedulers.io())
             .retry(Predicate { it is SSLException })
             .observeOn(AndroidSchedulers.mainThread())

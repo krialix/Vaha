@@ -41,9 +41,9 @@ internal class SessionEndpoint : BaseEndpoint() {
         EndSessionUseCase(questionId, rating!!.toFloat(), reasked).run()
     }
 
-    @ApiMethod(name = "sessions.answererReady", path = "sessions/answererReady", httpMethod = POST)
+    @ApiMethod(name = "sessions.request", path = "sessions/request", httpMethod = POST)
     @Throws(ServiceException::class)
-    fun answererReady(@Named("questionId") questionId: String, user: User?) {
+    fun request(@Named("questionId") questionId: String, user: User?) {
 
         EndpointsValidator().on(AuthValidator.create(user))
 

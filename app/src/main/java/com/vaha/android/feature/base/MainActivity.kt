@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.annotation.StringRes
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import android.widget.Toast
@@ -21,11 +20,7 @@ import com.vaha.android.data.repository.SessionRepository
 import com.vaha.android.feature.BottomNavigationController
 import com.vaha.android.feature.auth.signin.SignInController
 import com.vaha.android.feature.session.SessionController
-import com.vaha.android.util.addTo
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ActionBarProvider {
@@ -65,34 +60,6 @@ class MainActivity : AppCompatActivity(), ActionBarProvider {
         //user?.let { checkUserIsInActiveSession() }
 
         startService(Intent(this, VahaService::class.java))
-    }
-
-    private fun checkUserIsInActiveSession() {
-        sessionRepository.checkActiveSession()
-            .filter { it.id != null }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.session_dialog_exists))
-                    .setPositiveButton(getString(R.string.session_dialog_continue), { _, _ ->
-                        val controller = SessionController.create(
-                            questionId = it.id,
-                            userId = sharedPreferences.getString("userId", ""),
-                            username = sharedPreferences.getString("username", ""),
-                            answererId = it.answererId,
-                            questionOwner = it.owner,
-                            enableWriting = true
-                        )
-
-                        router.pushController(RouterTransaction.with(controller))
-                    })
-                    .setNegativeButton(android.R.string.cancel, { _, _ ->
-
-                    })
-                    .show()
-            }, Timber::e)
-            .addTo(disposable)
     }
 
     override fun onBackPressed() {

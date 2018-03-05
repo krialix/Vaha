@@ -56,10 +56,6 @@ public class CategoryListController extends BaseController {
     setupRecyclerView();
 
     viewModel = viewModelFactory.create(CategoryListViewModel.class);
-
-    /*viewModel =
-    ViewModelProvider.AndroidViewModelFactory.getInstance().of((FragmentActivity) getActivity(), viewModelFactory)
-        .get(CategoryListViewModel.class);*/
   }
 
   @Override

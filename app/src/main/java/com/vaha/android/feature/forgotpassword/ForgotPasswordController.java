@@ -1,4 +1,4 @@
-package com.vaha.android.feature.forgot_password;
+package com.vaha.android.feature.forgotpassword;
 
 import android.app.ProgressDialog;
 import android.support.annotation.StringRes;

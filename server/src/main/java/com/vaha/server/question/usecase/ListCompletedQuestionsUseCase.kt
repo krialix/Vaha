@@ -3,13 +3,14 @@ package com.vaha.server.question.usecase
 import com.google.api.server.spi.response.CollectionResponse
 import com.google.appengine.api.datastore.Cursor
 import com.googlecode.objectify.Key
+import com.googlecode.objectify.Ref
 import com.vaha.server.base.UseCase
 import com.vaha.server.ofy.OfyService.ofy
 import com.vaha.server.question.client.QuestionClient
 import com.vaha.server.question.entity.Question
 import com.vaha.server.user.entity.Account
 
-class ListAvailableQuestionsUseCase(
+class ListCompletedQuestionsUseCase(
     private val cursor: String?,
     private val userId: String
 ) : UseCase<CollectionResponse<QuestionClient>> {
@@ -20,7 +21,8 @@ class ListAvailableQuestionsUseCase(
         var query = ofy()
             .load()
             .type(Question::class.java)
-            .filter(Question.FIELD_STATUS, Question.Status.AVAILABLE)
+            .filter(Question.FIELD_STATUS, Question.Status.COMPLETED)
+            .filter(Question.FIELD_ANSWERER, Ref.create(requesterKey))
             .order("-${Question.FIELD_CREATED_AT}")
 
         cursor?.let { query = query.startAt(Cursor.fromWebSafeString(it)) }

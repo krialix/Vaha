@@ -30,7 +30,7 @@ import com.vaha.android.feature.BottomNavigationController;
 import com.vaha.android.feature.auth.ValidationUtils;
 import com.vaha.android.feature.auth.signup.SignUpController;
 import com.vaha.android.feature.base.BaseController;
-import com.vaha.android.feature.forgot_password.ForgotPasswordController;
+import com.vaha.android.feature.forgotpassword.ForgotPasswordController;
 import com.vaha.android.util.KeyboardUtil;
 
 import javax.inject.Inject;

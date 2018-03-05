@@ -20,7 +20,6 @@ import com.vaha.android.util.BundleBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,7 +32,7 @@ import timber.log.Timber;
 
 public class QuestionListController extends BaseController {
 
-  private static final String KEY_QUESTION_TYPE = "QUESTION_TYPE";
+  private static final String KEY_SORT_TYPE = "SORT_TYPE";
 
   private final CompositeDisposable disposable = new CompositeDisposable();
 
@@ -47,14 +46,16 @@ public class QuestionListController extends BaseController {
 
   private QuestionListEpoxyController epoxyController;
 
+  private String cursor;
+
   public QuestionListController(@NotNull Bundle args) {
     super(args);
     setRetainViewMode(RetainViewMode.RETAIN_DETACH);
   }
 
-  public static QuestionListController create(QuestionType questionType) {
+  public static QuestionListController create(SortType sortType) {
     return new QuestionListController(
-        new BundleBuilder().putInt(KEY_QUESTION_TYPE, questionType.ordinal()).build());
+        new BundleBuilder().putInt(KEY_SORT_TYPE, sortType.ordinal()).build());
   }
 
   @NonNull
@@ -67,24 +68,24 @@ public class QuestionListController extends BaseController {
   protected void onViewBound(@NonNull View view) {
     super.onViewBound(view);
 
-    QuestionType type = QuestionType.values()[getArgs().getInt(KEY_QUESTION_TYPE)];
+    SortType type = SortType.values()[getArgs().getInt(KEY_SORT_TYPE)];
 
     setupRecyclerView();
 
     disposable.add(
         sessionRepository
-            .listQuestions(null)
+            .listQuestions(cursor, type.name())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 response -> {
-                  // cursor = response.getNextPageToken();
+                  cursor = response.getNextPageToken();
 
-                  List<Question> questions = response == null ? Collections.emptyList() : response;
+                  List<Question> items = response.getItems();
 
-                  emptyState.setVisibility(questions.isEmpty() ? View.VISIBLE : View.GONE);
+                  emptyState.setVisibility(items.isEmpty() ? View.VISIBLE : View.GONE);
 
-                  epoxyController.setData(questions);
+                  epoxyController.setData(items);
                 },
                 Timber::e));
   }
@@ -107,7 +108,7 @@ public class QuestionListController extends BaseController {
         (v, questionClient) ->
             disposable.add(
                 sessionRepository
-                    .sendAnswererAvailable(questionClient.getId())
+                    .sendRequest(questionClient.getId())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(

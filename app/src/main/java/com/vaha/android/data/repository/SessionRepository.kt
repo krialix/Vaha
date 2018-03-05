@@ -3,13 +3,11 @@ package com.vaha.android.data.repository
 import com.androidhuman.rxfirebase2.database.ChildAddEvent
 import com.androidhuman.rxfirebase2.database.RxFirebaseDatabase
 import com.google.firebase.database.FirebaseDatabase
-import com.vaha.android.data.api.SessionService
 import com.vaha.android.data.api.VahaService
 import com.vaha.android.data.entity.Question
+import com.vaha.android.data.entity.QuestionResponse
 import com.vaha.android.data.entity.chat.LastUserMessage
 import com.vaha.android.data.entity.chat.Message
-import com.vaha.server.vahaApi.model.CollectionResponseSessionClient
-import com.vaha.server.vahaApi.model.QuestionClient
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -17,26 +15,25 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SessionRepository @Inject constructor(
-    private val vahaService: VahaService,
-    private val sessionService: SessionService
-) {
+class SessionRepository @Inject constructor(private val vahaService: VahaService) {
 
     private val database = FirebaseDatabase.getInstance()
 
-    fun insertQuestion(content: String, categoryId: String): Completable {
+    fun insertQuestion(content: String, categoryId: String): Single<Question> {
         return vahaService.insertQuestion(content, categoryId)
     }
 
-    fun listQuestions(cursor: String?): Single<List<Question>> {
-        return vahaService.listQuestions()
+    fun listQuestions(cursor: String?, sort: String): Single<QuestionResponse> {
+        return vahaService.listQuestions(cursor, sort)
     }
 
-    fun startSession(questionId: String, answererId: String): Completable =
-        sessionService.startSession(questionId, answererId)
+    fun startSession(questionId: String, answererId: String): Completable {
+        return vahaService.startSession(questionId, answererId)
+    }
 
-    fun endSession(questionId: String, reasked: Boolean, rating: Int): Completable =
-        sessionService.endSession(questionId, reasked, rating)
+    fun endSession(questionId: String, reasked: Boolean, rating: Int): Completable {
+        return vahaService.endSession(questionId, reasked, rating)
+    }
 
     fun sendMessage(message: Message, answererId: String, sessionId: String) {
         val messageRef = database.getReference("messages/$sessionId/").push()
@@ -79,11 +76,7 @@ class SessionRepository @Inject constructor(
             }
     }
 
-    fun sendAnswererAvailable(questionId: String): Completable =
-        sessionService.sendAnswererReady(questionId)
-
-    fun getSessions(status: String): Single<CollectionResponseSessionClient> =
-        sessionService.getSessions(status)
-
-    fun checkActiveSession(): Single<QuestionClient> = sessionService.checkActiveSession()
+    fun sendRequest(questionId: String): Completable {
+        return vahaService.sendRequest(questionId)
+    }
 }
