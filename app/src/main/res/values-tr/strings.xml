@@ -98,4 +98,10 @@
     <!-- Request View -->
     <string name="request_view_content">%1$s &#183; %2$s/5</string>
 
+    <!-- Question Pager -->
+    <string name="pager_available_questions">Uygun</string>
+    <string name="pager_pending_questions">Bekleyen</string>
+    <string name="pager_active_questions">Aktif</string>
+    <string name="pager_completed_questions">Tamamlanmış</string>
+
 </resources>

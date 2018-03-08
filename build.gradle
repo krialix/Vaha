@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0-beta4'
+        classpath 'com.android.tools.build:gradle:3.1.0-rc01'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
         classpath 'com.google.cloud.tools:endpoints-framework-gradle-plugin:1.0.3'
@@ -52,10 +52,10 @@ ext {
     javaTarget = JavaVersion.VERSION_1_8
 
     rxJavaVersion = '2.1.9'
-    rxAndroidVersion = '2.0.1'
+    rxAndroidVersion = '2.0.2'
     rxbindingVersion = '2.0.0'
 
-    supportLibVersion = '27.0.2'
+    supportLibVersion = '27.1.0'
     multidexVersion = '1.0.2'
     constraintLayoutVersion = '1.1.0-beta5'
     firebaseVersion = '11.8.0'
@@ -64,7 +64,7 @@ ext {
 
     glideVersion = '4.6.1'
     butterknifeVersion = '8.8.1'
-    timberVersion = '4.6.0'
+    timberVersion = '4.6.1'
     conductorVersion = '2.1.5-SNAPSHOT'
     epoxyVersion = '2.9.1'
     architectureComponentsVersion = '1.1.0'

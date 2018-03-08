@@ -20,8 +20,7 @@ import com.vaha.android.fcm.FirebaseBackgroundService;
 import com.vaha.android.feature.base.BaseController;
 import com.vaha.android.feature.categorylist.CategoryListController;
 import com.vaha.android.feature.profile.ProfileController;
-import com.vaha.android.feature.questionlist.QuestionListController;
-import com.vaha.android.feature.sessionlist.SessionListController;
+import com.vaha.android.feature.questionpanel.QuestionPagerController;
 
 import butterknife.BindView;
 import me.toptas.fancyshowcase.FancyShowCaseView;
@@ -63,9 +62,7 @@ public class BottomNavigationController extends BaseController {
       case R.id.navigation_category:
         return CategoryListController.create();
       case R.id.navigation_questions:
-        return QuestionListController.create();
-      case R.id.navigation_sessions:
-        return SessionListController.create();
+        return new QuestionPagerController();
       case R.id.navigation_profile:
         return ProfileController.create();
       default:
