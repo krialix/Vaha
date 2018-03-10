@@ -9,7 +9,7 @@ import com.airbnb.epoxy.CallbackProp;
 import com.airbnb.epoxy.ModelProp;
 import com.airbnb.epoxy.ModelView;
 import com.vaha.android.R;
-import com.vaha.server.vahaApi.model.TopicResponse;
+import com.vaha.android.data.entity.TopicResponse;
 
 import java.util.Locale;
 
@@ -40,12 +40,12 @@ public class TopicPrefView extends SwitchCompat {
 
   @ModelProp
   public void setTopicResponse(TopicResponse topicResponse) {
-    setChecked(topicResponse.getSubscribed());
+    setChecked(topicResponse.isSubscribed());
 
     String displayLanguage = Locale.getDefault().getDisplayLanguage();
 
     if (displayLanguage.equals("Türkçe")) {
-      setText(topicResponse.getDisplayNameTr());
+      setText(topicResponse.getDisplayName());
     } else {
       setText(topicResponse.getDisplayName());
     }

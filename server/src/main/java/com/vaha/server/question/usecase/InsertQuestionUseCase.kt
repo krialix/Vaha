@@ -15,12 +15,12 @@ import com.vaha.server.util.ServerEnv
 class InsertQuestionUseCase(
     private val ownerId: String,
     private val content: String,
-    private val categoryId: String
+    private val categoryId: Long
 ) : UseCase<QuestionClient> {
 
     override fun run(): QuestionClient {
         val ownerKey = Key.create<Account>(ownerId)
-        val categoryKey = Key.create<Category>(categoryId)
+        val categoryKey = Key.create<Category>(Category::class.java, categoryId)
 
         val fetched = ofy().load().keys(ownerKey, categoryKey) as Map<*, *>
         val user = fetched[ownerKey] as Account

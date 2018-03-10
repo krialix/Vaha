@@ -27,6 +27,13 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="16dp" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_horizontal_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="16dp" />
+
     <TextView
         android:id="@+id/tv_question_category"
         android:layout_width="wrap_content"
@@ -81,7 +88,7 @@
         tools:text="@string/question_answered_by" />
 
     <Button
-        android:id="@+id/tv_question_send_session_request"
+        android:id="@+id/btn_question_send_session_request"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -100,10 +107,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/gl_horizontal_bottom"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_question_send_session_request">
+        app:layout_constraintTop_toBottomOf="@+id/btn_question_send_session_request">
 
         <com.github.florent37.expansionpanel.ExpansionHeader
             android:layout_width="match_parent"

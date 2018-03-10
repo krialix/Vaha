@@ -4,11 +4,9 @@ import com.vaha.android.data.entity.Category
 import com.vaha.android.data.entity.Question
 import com.vaha.android.data.entity.QuestionResponse
 import com.vaha.android.data.entity.User
-import com.vaha.server.vahaApi.model.TopicResponse
 import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface VahaService {
 
@@ -16,29 +14,44 @@ interface VahaService {
     fun getMe(): Single<User>
 
     @POST("me")
-    fun registerUser(payload: String): Single<User>
+    @FormUrlEncoded
+    fun registerUser(@Field("payload") payload: String): Single<User>
 
     @POST("me/updateFcmToken")
-    fun updateFcmToken(token: String): Completable
-
-    @GET("me/listFcmTopics")
-    fun listFcmTopics(): Single<List<TopicResponse>>
+    @FormUrlEncoded
+    fun updateFcmToken(@Field("token") token: String): Completable
 
     @GET("questions")
-    fun listQuestions(cursor: String?, sort: String): Single<QuestionResponse>
+    fun listQuestions(
+        @Query("cursor") cursor: String?,
+        @Query("sort") sort: String
+    ): Single<QuestionResponse>
 
     @POST("questions")
-    fun insertQuestion(content: String, categoryId: String): Single<Question>
+    @FormUrlEncoded
+    fun insertQuestion(
+        @Field("content") content: String,
+        @Field("categoryId") categoryId: Long
+    ): Single<Question>
 
     @GET("categories")
     fun listCategories(): Single<List<Category>>
 
     @POST("sessions/start")
-    fun startSession(questionId: String, answererId: String): Completable
+    @FormUrlEncoded
+    fun startSession(
+        @Field("questionId") questionId: String,
+        @Field("answererId") answererId: String
+    ): Completable
 
     @POST("sessions/end")
-    fun endSession(questionId: String, reasked: Boolean, rating: Int): Completable
+    fun endSession(
+        @Field("questionId") questionId: String,
+        @Field("reasked") reasked: Boolean,
+        @Field("rating") rating: Int
+    ): Completable
 
     @POST("sessions/request")
-    fun sendRequest(questionId: String): Completable
+    @FormUrlEncoded
+    fun sendRequest(@Field("questionId") questionId: String): Completable
 }

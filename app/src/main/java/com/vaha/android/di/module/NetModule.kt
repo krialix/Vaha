@@ -1,15 +1,8 @@
 package com.vaha.android.di.module
 
-import com.google.android.gms.tasks.Tasks
-import com.google.api.client.extensions.android.http.AndroidHttp
-import com.google.api.client.http.HttpHeaders
-import com.google.api.client.http.HttpRequestInitializer
-import com.google.api.client.json.jackson2.JacksonFactory
-import com.google.firebase.auth.FirebaseAuth
 import com.squareup.moshi.Moshi
 import com.vaha.android.BuildConfig
 import com.vaha.android.data.api.VahaService
-import com.vaha.server.vahaApi.VahaApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -48,7 +41,7 @@ object NetModule {
             .create(VahaService::class.java)
     }
 
-    @Provides
+    /*@Provides
     @JvmStatic
     fun provideAuthorization(): HttpRequestInitializer {
         return HttpRequestInitializer {
@@ -84,5 +77,5 @@ object NetModule {
             }
             .setApplicationName("vahaApi")
             .build()
-    }
+    }*/
 }

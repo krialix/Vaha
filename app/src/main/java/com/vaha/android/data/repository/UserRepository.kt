@@ -7,7 +7,6 @@ import com.vaha.android.data.api.VahaService
 import com.vaha.android.data.entity.RegisterPayload
 import com.vaha.android.data.entity.User
 import com.vaha.android.util.toSingle
-import com.vaha.server.vahaApi.model.TopicResponseCollection
 import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -45,9 +44,5 @@ class UserRepository @Inject constructor(
 
     fun updateFcmToken(token: String): Completable {
         return vahaService.updateFcmToken(token)
-    }
-
-    fun listFcmTopics(): Single<TopicResponseCollection> {
-        return Single.never()
     }
 }

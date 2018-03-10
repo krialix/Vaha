@@ -22,6 +22,9 @@ data class Question(
     @Json(name = "isRequestSent")
     val isRequestSent: Boolean,
 
+    @Json(name = "isRequestSent")
+    val isRequestEnabled: Boolean,
+
     @Json(name = "content")
     val content: String,
 
@@ -31,11 +34,11 @@ data class Question(
 
     data class Answerer(
 
-        @Json(name = "displayName")
-        val displayName: String,
+        @Json(name = "id")
+        val userId: String,
 
-        @Json(name = "userId")
-        val userId: String
+        @Json(name = "displayName")
+        val displayName: String
     )
 
     data class User(
@@ -52,14 +55,15 @@ data class Question(
 
     data class Category(
 
+        @Json(name = "id")
+        val id: Long,
+
         @Json(name = "nameTr")
-        val nameTr: String,
+        val displayName: String,
 
-        @Json(name = "nameEn")
-        val nameEn: String,
+        @Json(name = "image")
+        val image: String
 
-        @Json(name = "categoryId")
-        val categoryId: String
     )
 
     data class Request(

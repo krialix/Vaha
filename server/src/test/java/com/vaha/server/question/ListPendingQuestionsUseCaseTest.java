@@ -41,7 +41,7 @@ public class ListPendingQuestionsUseCaseTest {
     Account a2 = newAccount();
     Category category = newCategory("c1");
 
-    String categoryId = category.getKey().toWebSafeString();
+    long categoryId = category.getId();
 
     QuestionClient c1 = new InsertQuestionUseCase(a1.getWebsafeId(), "c1", categoryId).run();
     QuestionClient c2 = new InsertQuestionUseCase(a2.getWebsafeId(), "c2", categoryId).run();

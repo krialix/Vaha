@@ -52,8 +52,8 @@ public class AskController extends BaseController {
     super(bundle);
   }
 
-  public static AskController create(@NonNull String categoryId) {
-    return new AskController(new BundleBuilder().putString(KEY_CATEGORY_ID, categoryId).build());
+  public static AskController create(long categoryId) {
+    return new AskController(new BundleBuilder().putLong(KEY_CATEGORY_ID, categoryId).build());
   }
 
   @NotNull
@@ -98,7 +98,7 @@ public class AskController extends BaseController {
 
     showProgressDialog();
 
-    final String categoryId = getArgs().getString(KEY_CATEGORY_ID, "");
+    final long categoryId = getArgs().getLong(KEY_CATEGORY_ID, 0L);
 
     disposable.add(
         sessionRepository
@@ -107,7 +107,7 @@ public class AskController extends BaseController {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnDispose(this::hideProgressDialog)
             .subscribe(
-                () -> {
+                question -> {
                   hideProgressDialog();
                   getRouter().handleBack();
                 },

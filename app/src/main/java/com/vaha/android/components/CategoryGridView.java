@@ -61,9 +61,9 @@ public class CategoryGridView extends ConstraintLayout {
     String displayLanguage = Locale.getDefault().getDisplayLanguage();
 
     if (displayLanguage.equals("Türkçe")) {
-      tvDisplayName.setText(category.getDisplayNameTr());
+      tvDisplayName.setText(category.getDisplayName());
     } else {
-      tvDisplayName.setText(category.getDisplayNameEn());
+      tvDisplayName.setText(category.getDisplayName());
     }
 
     final CharSequence url = getImageUrl(category.getImage());

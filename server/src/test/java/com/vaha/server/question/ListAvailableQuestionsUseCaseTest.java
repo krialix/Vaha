@@ -43,7 +43,7 @@ public class ListAvailableQuestionsUseCaseTest {
     Account a2 = newAccount();
     Category category = newCategory("c1");
 
-    String categoryId = category.getKey().toWebSafeString();
+    long categoryId = category.getId();
 
     new InsertQuestionUseCase(a1.getWebsafeId(), "c1", categoryId).run();
     new InsertQuestionUseCase(a2.getWebsafeId(), "c2", categoryId).run();
@@ -55,7 +55,7 @@ public class ListAvailableQuestionsUseCaseTest {
         response
             .getItems()
             .stream()
-            .map(questionClient -> questionClient.getOwner().isOwner())
+            .map(questionClient -> questionClient.getUser().isOwner())
             .collect(Collectors.toList());
 
     assertThat(isOwnerList).containsExactly(false, true);

@@ -21,7 +21,7 @@ internal class QuestionEndpoint : BaseEndpoint() {
     @Throws(ServiceException::class)
     fun insert(
         @Named("content") content: String,
-        @Named("categoryId") categoryId: String,
+        @Named("categoryId") categoryId: Long,
         user: User?
     ): QuestionClient {
 

@@ -25,7 +25,8 @@ class ListInProgressQuestionsUseCase(
                 QuestionClient.from(
                     question = it,
                     isOwner = it.isOwner(requesterKey),
-                    requestSent = true
+                    requestSent = true,
+                    requestEnabled =
                 )
             }
             .toList()

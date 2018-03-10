@@ -21,7 +21,7 @@ class ListPendingQuestionsUseCase(
 
         return questions
             .asSequence()
-            .map { QuestionClient.from(question = it, requestSent = true) }
+            .map { QuestionClient.from(question = it, requestSent = true, requestEnabled = false) }
             .toList()
             .let {
                 CollectionResponse.builder<QuestionClient>()

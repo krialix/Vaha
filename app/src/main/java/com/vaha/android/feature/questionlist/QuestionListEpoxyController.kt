@@ -22,10 +22,11 @@ internal class QuestionListEpoxyController : TypedEpoxyController<List<Question>
         QuestionViewModel_()
             .id(client.id)
             .isOwner(client.user.isOwner)
-            .categoryName(client.category.nameEn)
+            .categoryName(client.category.displayName)
             .askedBy(client.user.displayName)
             .answeredBy(client.answerer?.displayName)
             .content(client.content)
+            .requestButtonEnabled(client.isRequestEnabled)
             .sendRequestVisibility(client.isRequestSent)
             .onStartSessionClickListener { view ->
                 onStartSessionClickListener.onItemClick(view, client)

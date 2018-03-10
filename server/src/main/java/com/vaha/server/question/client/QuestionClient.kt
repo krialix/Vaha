@@ -1,23 +1,21 @@
 package com.vaha.server.question.client
 
+import com.vaha.server.category.client.CategoryClient
 import com.vaha.server.question.entity.Question
 import org.joda.time.DateTime
 
 data class QuestionClient(
     val id: String,
-    val owner: QuestionOwnerClient,
-    val categoryId: Long,
+    val user: QuestionOwnerClient,
+    val category: CategoryClient,
     val content: String,
     val answerer: AnswererClient?,
     val createdAt: DateTime?,
-    val requestSent: Boolean,
+    val isRequestSent: Boolean,
+    val isRequestEnabled: Boolean,
     val pendingUserRequests: List<PendingUserRequestClient>?
 ) {
-    data class QuestionOwnerClient(
-        val id: String,
-        val username: String,
-        val isOwner: Boolean
-    )
+    data class QuestionOwnerClient(val id: String, val username: String, val isOwner: Boolean)
 
     data class PendingUserRequestClient(val id: String, val username: String, val rating: String)
 
@@ -27,23 +25,25 @@ data class QuestionClient(
         fun from(
             question: Question,
             isOwner: Boolean = false,
-            requestSent: Boolean = false
+            requestSent: Boolean = false,
+            requestEnabled: Boolean = true
         ): QuestionClient {
             return QuestionClient(
                 id = question.key.toWebSafeString(),
-                owner = QuestionOwnerClient(
+                user = QuestionOwnerClient(
                     id = question.ownerWebsafeId,
                     username = question.username,
                     isOwner = isOwner
                 ),
-                categoryId = question.category.key.id,
+                category = CategoryClient.from(question.category.value),
                 content = question.content,
                 answerer = question.answerer?.let {
                     val answerer = it.get()
                     AnswererClient(id = answerer.websafeId, username = answerer.username)
                 },
                 createdAt = question.createdAt,
-                requestSent = requestSent,
+                isRequestSent = requestSent,
+                isRequestEnabled = requestEnabled,
                 pendingUserRequests = question.pendingUserRequests
                     .map {
                         PendingUserRequestClient(

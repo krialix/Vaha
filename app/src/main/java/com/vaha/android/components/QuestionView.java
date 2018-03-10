@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.airbnb.epoxy.CallbackProp;
@@ -32,8 +33,8 @@ public class QuestionView extends ConstraintLayout {
   @BindView(R.id.tv_question_answered_by)
   TextView tvAnsweredBy;
 
-  @BindView(R.id.tv_question_send_session_request)
-  TextView tvSendSessionRequest;
+  @BindView(R.id.btn_question_send_session_request)
+  Button btnSendSessionRequest;
 
   @BindView(R.id.tv_question_category)
   TextView tvCategory;
@@ -87,7 +88,7 @@ public class QuestionView extends ConstraintLayout {
 
   @ModelProp
   public void isOwner(boolean owner) {
-    tvSendSessionRequest.setVisibility(owner ? GONE : VISIBLE);
+    //btnSendSessionRequest.setVisibility(owner ? GONE : VISIBLE);
   }
 
   @ModelProp
@@ -107,16 +108,21 @@ public class QuestionView extends ConstraintLayout {
   }
 
   @ModelProp
+  public void setRequestButtonEnabled(boolean enabled) {
+    btnSendSessionRequest.setVisibility(enabled ? VISIBLE : GONE);
+  }
+
+  @ModelProp
   public void setSendRequestVisibility(boolean requestSent) {
     if (requestSent) {
-      tvSendSessionRequest.setEnabled(false);
-      tvSendSessionRequest.setText(R.string.question_request_sent);
+      btnSendSessionRequest.setEnabled(false);
+      btnSendSessionRequest.setText(R.string.question_request_sent);
     }
   }
 
   @CallbackProp
   public void setOnStartSessionClickListener(@Nullable View.OnClickListener onClickListener) {
-    tvSendSessionRequest.setOnClickListener(
+    btnSendSessionRequest.setOnClickListener(
         view -> {
           if (onClickListener != null) {
             onClickListener.onClick(view);

@@ -39,7 +39,8 @@ class ListCompletedQuestionsUseCase(
                 QuestionClient.from(
                     question = it,
                     isOwner = it.isOwner(requesterKey),
-                    requestSent = it.pendingUserRequests.any { it.userKey.equivalent(requesterKey) }
+                    requestSent = it.pendingUserRequests.any { it.userKey.equivalent(requesterKey) },
+                    requestEnabled = false
                 )
             }
             .toList()

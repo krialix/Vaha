@@ -2,22 +2,15 @@ package com.vaha.android.feature.sessionlist;
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bluelinelabs.conductor.Controller;
-import com.bluelinelabs.conductor.RouterTransaction;
-import com.bluelinelabs.conductor.changehandler.VerticalChangeHandler;
 import com.vaha.android.R;
 import com.vaha.android.VahaApplication;
 import com.vaha.android.data.repository.SessionRepository;
 import com.vaha.android.feature.base.BaseController;
-import com.vaha.android.feature.session.SessionController;
 
 import javax.inject.Inject;
 
@@ -38,7 +31,7 @@ public class SessionListController extends BaseController {
 
   @Inject SharedPreferences sharedPreferences;
 
-  private SessionListEpoxyController epoxyController;
+  //private SessionListEpoxyController epoxyController;
 
   public static SessionListController create() {
     return new SessionListController();
@@ -55,7 +48,7 @@ public class SessionListController extends BaseController {
     super.onViewBound(view);
     setRetainViewMode(RetainViewMode.RETAIN_DETACH);
 
-    setupRecyclerView();
+    //setupRecyclerView();
 
     /*disposable.add(
     sessionRepository
@@ -86,7 +79,7 @@ public class SessionListController extends BaseController {
     VahaApplication.getAppComponent().sessionListComponent().build().inject(this);
   }
 
-  private void setupRecyclerView() {
+  /*private void setupRecyclerView() {
     epoxyController = new SessionListEpoxyController();
     epoxyController.setOnClickListener(
         (v, questionClient) -> {
@@ -120,5 +113,5 @@ public class SessionListController extends BaseController {
         new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
     recyclerView.setHasFixedSize(true);
     recyclerView.setAdapter(epoxyController.getAdapter());
-  }
+  }*/
 }

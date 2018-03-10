@@ -10,11 +10,7 @@ import com.vaha.android.R
 import com.vaha.android.VahaApplication
 import com.vaha.android.data.repository.UserRepository
 import com.vaha.android.feature.base.BaseController
-import com.vaha.android.util.addTo
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 import javax.inject.Inject
 
 class TopicPreferencesController : BaseController(),
@@ -47,11 +43,11 @@ class TopicPreferencesController : BaseController(),
             setDisplayHomeAsUpEnabled(true)
         }
 
-        userRepository.listFcmTopics()
+        /*userRepository.listFcmTopics()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ epoxyController.setData(it.items) }, Timber::e)
-            .addTo(disposable)
+            .addTo(disposable)*/
     }
 
     override fun onDetach(view: View) {

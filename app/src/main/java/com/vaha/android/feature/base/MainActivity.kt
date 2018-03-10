@@ -15,10 +15,8 @@ import com.bluelinelabs.conductor.RouterTransaction
 import com.google.firebase.auth.FirebaseAuth
 import com.vaha.android.R
 import com.vaha.android.VahaApplication
-import com.vaha.android.VahaService
 import com.vaha.android.data.repository.SessionRepository
 import com.vaha.android.feature.BottomNavigationController
-import com.vaha.android.feature.auth.signin.SignInController
 import com.vaha.android.feature.session.SessionController
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -48,7 +46,7 @@ class MainActivity : AppCompatActivity(), ActionBarProvider {
 
         if (!router.hasRootController()) {
             val controller = when (user) {
-                null -> SignInController.create()
+                null -> BottomNavigationController.create()
                 else -> BottomNavigationController.create()
             }
 
@@ -57,9 +55,7 @@ class MainActivity : AppCompatActivity(), ActionBarProvider {
             onNewIntent(intent)
         }
 
-        //user?.let { checkUserIsInActiveSession() }
-
-        startService(Intent(this, VahaService::class.java))
+        //startService(Intent(this, VahaService::class.java))
     }
 
     override fun onBackPressed() {

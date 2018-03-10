@@ -19,7 +19,7 @@ class SessionRepository @Inject constructor(private val vahaService: VahaService
 
     private val database = FirebaseDatabase.getInstance()
 
-    fun insertQuestion(content: String, categoryId: String): Single<Question> {
+    fun insertQuestion(content: String, categoryId: Long): Single<Question> {
         return vahaService.insertQuestion(content, categoryId)
     }
 

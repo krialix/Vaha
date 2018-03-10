@@ -40,20 +40,18 @@ public class InsertQuestionUseCaseTest {
     Category c1 = newCategory("c1");
 
     QuestionClient client =
-        new InsertQuestionUseCase(
-                account.getWebsafeId(), "testContent", c1.getKey().toWebSafeString())
-            .run();
+        new InsertQuestionUseCase(account.getWebsafeId(), "testContent", c1.getId()).run();
 
     assertThat(client.getId()).isNotEmpty();
-    assertThat(client.getOwner())
+    assertThat(client.getUser())
         .isEqualTo(
             new QuestionClient.QuestionOwnerClient(
                 account.getWebsafeId(), account.getUsername(), true));
 
-    assertThat(client.getCategoryId()).isEqualTo(c1.getId());
+    assertThat(client.getCategory().getId()).isEqualTo(c1.getId());
     assertThat(client.getContent()).isEqualTo("testContent");
     assertThat(client.getAnswerer()).isNull();
-    assertThat(client.getRequestSent()).isFalse();
+    assertThat(client.isRequestSent()).isFalse();
     assertThat(client.getPendingUserRequests()).isEmpty();
     assertThat(client.getCreatedAt()).isNotNull();
 
@@ -74,17 +72,11 @@ public class InsertQuestionUseCaseTest {
     Account account = newAccount();
     Category c1 = newCategory("c1");
 
-    new InsertQuestionUseCase(account.getWebsafeId(), "testContent", c1.getKey().toWebSafeString())
-        .run();
-    new InsertQuestionUseCase(account.getWebsafeId(), "testContent2", c1.getKey().toWebSafeString())
-        .run();
-    new InsertQuestionUseCase(account.getWebsafeId(), "testContent3", c1.getKey().toWebSafeString())
-        .run();
-    new InsertQuestionUseCase(account.getWebsafeId(), "testContent4", c1.getKey().toWebSafeString())
-        .run();
-    new InsertQuestionUseCase(account.getWebsafeId(), "testContent5", c1.getKey().toWebSafeString())
-        .run();
-    new InsertQuestionUseCase(account.getWebsafeId(), "testContent6", c1.getKey().toWebSafeString())
-        .run();
+    new InsertQuestionUseCase(account.getWebsafeId(), "testContent", c1.getId()).run();
+    new InsertQuestionUseCase(account.getWebsafeId(), "testContent2", c1.getId()).run();
+    new InsertQuestionUseCase(account.getWebsafeId(), "testContent3", c1.getId()).run();
+    new InsertQuestionUseCase(account.getWebsafeId(), "testContent4", c1.getId()).run();
+    new InsertQuestionUseCase(account.getWebsafeId(), "testContent5", c1.getId()).run();
+    new InsertQuestionUseCase(account.getWebsafeId(), "testContent6", c1.getId()).run();
   }
 }

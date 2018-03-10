@@ -1,7 +1,7 @@
 package com.vaha.android.feature.topicpreferences
 
 import com.airbnb.epoxy.TypedEpoxyController
-import com.vaha.server.vahaApi.model.TopicResponse
+import com.vaha.android.data.entity.TopicResponse
 
 internal class TopicPreferencesEpoxyController : TypedEpoxyController<List<TopicResponse>>() {
 
@@ -15,12 +15,12 @@ internal class TopicPreferencesEpoxyController : TypedEpoxyController<List<Topic
 
     private fun createTopicPrefModel(client: TopicResponse) {
         TopicPrefViewModel_()
-            .id(client.topicName)
+            .id(client.displayName)
             .topicResponse(client)
             .selectListener { _, subscribe ->
                 when {
-                    subscribe -> topicSubscribeListener.onTopicSubscribe(client.topicName)
-                    else -> topicSubscribeListener.onTopicUnsubscribe(client.topicName)
+                    subscribe -> topicSubscribeListener.onTopicSubscribe(client.displayName)
+                    else -> topicSubscribeListener.onTopicUnsubscribe(client.displayName)
                 }
             }
             .addTo(this)
